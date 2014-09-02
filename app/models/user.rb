@@ -3,6 +3,9 @@ class User < ActiveRecord::Base
   has_many :carts
   has_many :contacts
   has_many :coupons
+  has_many :reports
+  has_many :answers
+
   rolify
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
