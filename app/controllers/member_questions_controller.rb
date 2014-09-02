@@ -1,0 +1,2 @@
+class MemberQuestionsController < ApplicationController
+end

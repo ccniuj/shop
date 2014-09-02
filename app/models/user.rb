@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   has_many :carts
   has_many :contacts
   has_many :coupons
-  has_many :reports
+  has_many :member_questions
   has_many :answers
 
   rolify
