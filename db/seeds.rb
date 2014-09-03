@@ -13,7 +13,7 @@ for i in 1..3 do
     for k in 1..10 do
       Product.create([ name: "product#{k+j*10-10}", description: "description of product#{k+j*10-10}", size_note: "my size", attention: "don't put in ur mouth"])
       SubclassProduct.create([ subclass_id: j, product_id: k+j*10-10 ])
-      ProductInfo.create([ product_id: k+j*10-10, style: "weird", color: "transparent", amount: k, price: k*100 ])
+      ProductInfo.create([ product_id: k+j*10-10, style: "weird", size: "XXL", amount: k, price: k*100 ])
       ProductImage.create([ product_info_id: k+j*10-10])
     end
   end
