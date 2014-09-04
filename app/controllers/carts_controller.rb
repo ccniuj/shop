@@ -16,20 +16,24 @@ class CartsController < ApplicationController
 
   def operation
      #send(params[:commit].downcase)
-     if params[:checkout] != nil
-       #render plain: params[:items].inspect
-       render plain: "checkout"
-     end
-     if params[:remove] != nil
-       #render plain: params[:items].inspect
-       remove
-       redirect_to carts_path
-     end
-
-     #render plain: params[:checkout].inspect
+    if params[:checkout] != nil
+      #redirect_to action: :checkout
+      checkout
+      render "carts/checkout"
+    elsif params[:remove] != nil
+      remove
+      redirect_to carts_path
+    end
   end
 
+  private
+
   def checkout
+    @item = []
+    params[:items].each do |i|
+      @t = Product.find(i)
+      @item << @t
+    end
   end
   
   def remove
@@ -42,5 +46,3 @@ class CartsController < ApplicationController
   end
   
 end
-
-
