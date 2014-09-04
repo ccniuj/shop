@@ -6,6 +6,7 @@ class Cart < ActiveRecord::Base
   def remove!(product)
     items.delete(product)
   end
+
   def foo
   end
 end
