@@ -22,7 +22,6 @@
         <td> <%= p.name %> </td>
         <td> <%= p.description %> </td>
         <td> <%= check_box_tag "items[]", p.id %></td>
-        <td> <%= link_to("Remove", remove_cart_path(p), :class => "btn btn-sm btn-default", :method=> :post, data: { confirm: "Are you sure?" } )%></td> 
         </tr>
       <% end %> 
     </tbody>

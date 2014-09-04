@@ -23,6 +23,6 @@
       <% end %> 
     </tbody>
   </table>
-  <%= link_to("Checkout", orders_path, :class => "btn btn-sm btn-default") %>
+  <%= link_to("Checkout", new_order_path(items: @item), :class => "btn btn-sm btn-default") %>
   <%= link_to("Back", carts_path, :class => "btn btn-sm btn-default") %>
 </div>
