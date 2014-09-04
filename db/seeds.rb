@@ -19,9 +19,8 @@ for i in 1..3 do
   end
 end
 
-puts "3 catalogs and 3 subclasses belonging to each catalog has built"
+puts "3 catalogs and 3 subclasses belonging to each catalog has been built"
 puts "10 products and their own infos & images has been built"
-puts "the connection"
 
 for a in 101..110 do
   Bug.create([name: "user#{a}", email: "user#{a}@gmail.com", title: "bug#{a}", content: "This is bug no.#{a}", status: "#{a}"])
@@ -37,12 +36,12 @@ for i in 1..10 do
     for k in 1..3 do
       Answer.create([member_question_id: "#{j}", user_id: "#{i}", content: "This is the answer no.#{k} of question no.#{j}"])
       Order.create([user_id: "#{i}", contact_id: "#{j}", pay_method: "#{k}", ship_method: "#{k}", status: "#{k}", total_price: "999"])
-      OrderProduct.create([ order_id: "#{k}", product_id: "#{k}" ])    
+      OrderProduct.create([ order_id: "#{k}", product_id: k*2 ])
     end
   end
   Cart.create([ user_id: i, receive_address: "This is receive_address of user#{i}", invoice_address: "This is invoice_address of user#{i}" ])
   for l in 1..3 do
-    CartProduct.create([ cart_id: "#{i}", product_id: "#{l}" ])
+    CartProduct.create([ cart_id: "#{i}", product_id: l*5 ])
   end
 end
 

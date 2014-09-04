@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       post :remove
     end
   end
+  resources :products
 
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.

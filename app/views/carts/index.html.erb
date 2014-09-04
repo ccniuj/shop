@@ -15,18 +15,20 @@
 
     <tbody>
       <% @product.each do |p| %>
+      
       <tr>
       <td> # </td>
       <td> <%= p.id %> </td>
       <td> <%= p.name %> </td>
       <td> <%= p.description %> </td>
-      <td> <%= link_to("Delete", 
+      <td> <%= link_to("Remove", 
                         remove_cart_path(p),
                         :class => "btn btn-sm btn-default", 
                         :method=> :post,
                         data: { confirm: "Are you sure?" } )%></td> 
     </tr>
             <% end %> 
+      
     </tbody>
   </table>
 </div>
