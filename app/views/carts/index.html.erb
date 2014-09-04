@@ -1,4 +1,5 @@
 <h1>carts#index</h1>
+<%= form_tag operation_cart_path(@cart), :method => "post" do %>
 <div class="col-md-12"> 
   <div class="group">
   </div>
@@ -10,25 +11,24 @@
         <td> ID </td>
         <td> Name </td>
         <td> Description </td>
+        <td></td>
       </tr>
     </thead>
-
     <tbody>
       <% @product.each do |p| %>
-      
-      <tr>
-      <td> # </td>
-      <td> <%= p.id %> </td>
-      <td> <%= p.name %> </td>
-      <td> <%= p.description %> </td>
-      <td> <%= link_to("Remove", 
-                        remove_cart_path(p),
-                        :class => "btn btn-sm btn-default", 
-                        :method=> :post,
-                        data: { confirm: "Are you sure?" } )%></td> 
-    </tr>
-            <% end %> 
-      
+        <tr>
+        <td> # </td>
+        <td> <%= p.id %> </td>
+        <td> <%= p.name %> </td>
+        <td> <%= p.description %> </td>
+        <td> <%= check_box_tag "items[]", p.id %></td>
+        <td> <%= link_to("Remove", remove_cart_path(p), :class => "btn btn-sm btn-default", :method=> :post, data: { confirm: "Are you sure?" } )%></td> 
+        </tr>
+      <% end %> 
     </tbody>
   </table>
+  <%= submit_tag "Checkout", :class => "btn btn-sm btn-default", :name => "checkout" %>
+  <%= submit_tag "Romove", :class => "btn btn-sm btn-default", :name => "remove" %>
+
 </div>
+<% end %>
