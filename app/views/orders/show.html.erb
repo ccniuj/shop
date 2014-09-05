@@ -1,5 +1,4 @@
-<h1>carts#checkout</h1>
-<%= form_tag orders_path, :method => "post" do %>
+<h1>orders#show</h1>
 <div class="col-md-12"> 
   <div class="group">
   </div>
@@ -9,8 +8,9 @@
       <tr>
         <td> # </td>
         <td> ID </td>
-        <td> Name </td>
-        <td> Description </td>
+        <td> order_id </td>
+        <td> product_id </td>
+        <td></td>
       </tr>
     </thead>
     <tbody>
@@ -18,14 +18,11 @@
         <tr>
         <td> # </td>
         <td> <%= i.id %> </td>
-        <td> <%= i.name %> </td>
-        <td> <%= i.description %> </td>
-        <%= hidden_field_tag "items[]", i.id %>
+        <td> <%= i.order_id %> </td>
+        <td> <%= i.product_id %> </td>
         </tr>
       <% end %> 
     </tbody>
   </table>
-  <%= submit_tag "Checkout", :class => "btn btn-sm btn-default", :name => "checkout" %>
   <%= link_to("Back", carts_path, :class => "btn btn-sm btn-default") %>
 </div>
-<% end %>

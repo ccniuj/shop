@@ -33,10 +33,11 @@ for i in 1..10 do
     Contact.create([name: "name#{j}user#{i}", cellphone: "0912-345678", address: "This is contact adress no.#{j} of user#{i}"])
     Coupon.create([user_id: i , expired_at: "20150101", title: "coupon#{j}", content: "This is coupon no.#{j}", amount: "888"])
     MemberQuestion.create([user_id: "#{i}", title: "Member_question#{j}", content: "This is member_question no.#{j} of user no.#{i}", status: "#{j}"])
+    Order.create([user_id: "#{i}", contact_id: "#{j}", pay_method: "#{j}", ship_method: "#{j}", status: "#{j}", total_price: "999"])
+
     for k in 1..3 do
       Answer.create([member_question_id: "#{j}", user_id: "#{i}", content: "This is the answer no.#{k} of question no.#{j}"])
-      Order.create([user_id: "#{i}", contact_id: "#{j}", pay_method: "#{k}", ship_method: "#{k}", status: "#{k}", total_price: "999"])
-      OrderProduct.create([ order_id: "#{k}", product_id: k*2 ])
+      OrderProduct.create([ order_id: (i-1)*3+j, product_id: k*3 ])
     end
   end
   Cart.create([ user_id: i, receive_address: "This is receive_address of user#{i}", invoice_address: "This is invoice_address of user#{i}" ])

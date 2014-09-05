@@ -15,14 +15,17 @@ class CartsController < ApplicationController
   end
 
   def operation
-     #send(params[:commit].downcase)
-    if params[:checkout] != nil
-      #redirect_to action: :checkout
-      checkout
-      render "carts/checkout"
-    elsif params[:remove] != nil
-      remove
+    unless params.has_key? :items
+      flash[:alert] = "You have to select at least 1 product"
       redirect_to carts_path
+    else
+      if params.has_key? :checkout
+        checkout
+        render "carts/checkout"
+      elsif params.has_key? :remove
+        remove
+        redirect_to carts_path
+      end
     end
   end
 
@@ -40,7 +43,7 @@ class CartsController < ApplicationController
     params[:items].each do |i|
       @product = Product.find(i)
       @cart = Cart.where(:user_id => current_user.id).take
-      @cart = @cart.remove!(@product)
+      @cart.remove!(@product)
     end
     flash[:alert] = "Product has been removed"
   end
