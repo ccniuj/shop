@@ -29,6 +29,23 @@ class CartsController < ApplicationController
     end
   end
 
+  def remove
+    if params.has_key? :items
+      params[:items].each do |i|
+        @product = Product.find(i)
+        @cart = Cart.where(:user_id => current_user.id).take
+        @cart.remove!(@product)
+      end
+      flash[:alert] = "Product has been removed"
+    else
+      @product = Product.find(params[:id])
+      @cart = Cart.where(:user_id => current_user.id).take
+      @cart.remove!(@product)
+      flash[:alert] = "Products have been removed"
+      redirect_to carts_path
+    end
+  end
+  
   private
 
   def checkout
@@ -37,15 +54,6 @@ class CartsController < ApplicationController
       @t = Product.find(i)
       @item << @t
     end
-  end
-  
-  def remove
-    params[:items].each do |i|
-      @product = Product.find(i)
-      @cart = Cart.where(:user_id => current_user.id).take
-      @cart.remove!(@product)
-    end
-    flash[:alert] = "Product has been removed"
   end
   
 end

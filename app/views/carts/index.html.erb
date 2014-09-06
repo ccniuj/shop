@@ -11,6 +11,7 @@
         <td> ID </td>
         <td> Name </td>
         <td> Description </td>
+        <td> Price </td>
         <td></td>
       </tr>
     </thead>
@@ -21,7 +22,8 @@
         <td> <%= p.id %> </td>
         <td> <%= p.name %> </td>
         <td> <%= p.description %> </td>
-        <td> <%= check_box_tag "items[]", p.id %></td>
+        <td> <%= check_box_tag "items[]", p.id, :checked => true %></td>
+        <td> <%= link_to("Remove", remove_cart_path(p), :class => "btn btn-sm btn-default", :method => "post") %></td>
         </tr>
       <% end %> 
     </tbody>

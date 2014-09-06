@@ -13,7 +13,7 @@ for i in 1..3 do
     for k in 1..10 do
       Product.create([ name: "product#{k+j*10-10}", description: "description of product#{k+j*10-10}", size_note: "my size", attention: "don't put in ur mouth"])
       SubclassProduct.create([ subclass_id: j, product_id: k+j*10-10 ])
-      ProductInfo.create([ product_id: k+j*10-10, style: "weird", size: "XXL", amount: k, price: k*100 ])
+      ProductInfo.create([ product_id: k+j*10-10, style: "weird", size: "XXL", amount: "1", price: i*100 ])
       ProductImage.create([ product_info_id: k+j*10-10])
     end
   end
@@ -30,7 +30,7 @@ for i in 1..10 do
   Faq.create([question: "This is faq question no.#{i}", answer: "This is faq answer no.#{i}"])
   User.create([ email: "user#{i}@gmail.com", password: '11111111', password_confirmation: '11111111' ])
   for j in 1..3 do
-    Contact.create([name: "name#{j}user#{i}", cellphone: "0912-345678", address: "This is contact adress no.#{j} of user#{i}"])
+    Contact.create([user_id: i, name: "name#{j}user#{i}", cellphone: "0912-345678", address: "This is contact adress no.#{j} of user#{i}"])
     Coupon.create([user_id: i , expired_at: "20150101", title: "coupon#{j}", content: "This is coupon no.#{j}", amount: "888"])
     MemberQuestion.create([user_id: "#{i}", title: "Member_question#{j}", content: "This is member_question no.#{j} of user no.#{i}", status: "#{j}"])
     Order.create([user_id: "#{i}", contact_id: "#{j}", pay_method: "#{j}", ship_method: "#{j}", status: "#{j}", total_price: "999"])
