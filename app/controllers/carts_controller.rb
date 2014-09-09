@@ -2,12 +2,16 @@ class CartsController < ApplicationController
   before_action :authenticate_user!
   
   def index
+    @is_checkout = false
     @cart = Cart.where(user_id: current_user.id).take
-    @item = CartProduct.where(cart_id: @cart.id)
-    @product = []
-    @item.each do |i|
-      @p = Product.where(id: i.product_id).take
-      @product << @p
+    @item = CartInventory.where(cart_id: @cart.id)
+    @inventory = []
+    @item_amount = []
+    @item.each do |z|
+      @i = Inventory.joins(:product).where(id: z.inventory_id).take
+      @n = z.amount
+      @inventory << @i
+      @item_amount << @n
     end
   end
 
@@ -32,15 +36,15 @@ class CartsController < ApplicationController
   def remove
     if params.has_key? :items
       params[:items].each do |i|
-        @product = Product.find(i)
+        @inventory = Inventory.find(i)
         @cart = Cart.where(:user_id => current_user.id).take
-        @cart.remove!(@product)
+        @cart.remove!(@inventory)
       end
       flash[:alert] = "Product has been removed"
     else
-      @product = Product.find(params[:id])
+      @inventory = Inventory.find(params[:id])
       @cart = Cart.where(:user_id => current_user.id).take
-      @cart.remove!(@product)
+      @cart.remove!(@inventory)
       flash[:alert] = "Products have been removed"
       redirect_to carts_path
     end
@@ -49,10 +53,11 @@ class CartsController < ApplicationController
   private
 
   def checkout
-    @item = []
+    @is_checkout = true
+    @inventory = []
     params[:items].each do |i|
-      @t = Product.find(i)
-      @item << @t
+      @t = Inventory.find(i)
+      @inventory << @t
     end
   end
   

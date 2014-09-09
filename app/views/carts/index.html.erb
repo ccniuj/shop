@@ -9,22 +9,33 @@
       <tr>
         <td> # </td>
         <td> ID </td>
+        <td> product_id </td>
         <td> Name </td>
         <td> Description </td>
+        <td> Color </td>
+        <td> Size </td>
         <td> Price </td>
+        <td> Amount </td>
         <td></td>
       </tr>
     </thead>
     <tbody>
-      <% @product.each do |p| %>
+      <% count = 0 %>
+      <% @inventory.each do |i| %>
         <tr>
         <td> # </td>
-        <td> <%= p.id %> </td>
-        <td> <%= p.name %> </td>
-        <td> <%= p.description %> </td>
-        <td> <%= check_box_tag "items[]", p.id, :checked => true %></td>
-        <td> <%= link_to("Remove", remove_cart_path(p), :class => "btn btn-sm btn-default", :method => "post") %></td>
+        <td> <%= i.id %> </td>
+        <td> <%= i.product_id %> </td>
+        <td> <%= i.product.name %> </td>
+        <td> <%= i.product.description %> </td>
+        <td> <%= i.color %> </td>
+        <td> <%= i.size %> </td>
+        <td> <%= i.price %> </td>
+        <td> <%= @item_amount[count] %> </td>
+        <td> <%= check_box_tag "items[]", i.id, :checked => true %></td>
+        <td> <%= link_to("Remove", remove_cart_path(i), :class => "btn btn-sm btn-default", :method => "post") %></td>
         </tr>
+        <% count += 1 %>
       <% end %> 
     </tbody>
   </table>

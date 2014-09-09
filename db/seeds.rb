@@ -13,7 +13,9 @@ for i in 1..3 do
     for k in 1..10 do
       Product.create([ name: "product#{k+j*10-10}", description: "description of product#{k+j*10-10}", size_note: "my size", attention: "don't put in ur mouth"])
       SubclassProduct.create([ subclass_id: j, product_id: k+j*10-10 ])
-      Inventory.create([ product_id: k+j*10-10, color: "black", size: "XXL", amount: "1", price: i*100 ])
+      for z in 1..3 do
+        Inventory.create([ product_id: k+j*10-10, color: "black", size: "XXL", amount: "20", price: (i+z)*100 ])
+      end
       InventoryImage.create([ inventory_id: k+j*10-10])
     end
   end
@@ -42,7 +44,7 @@ for i in 1..10 do
   end
   Cart.create([ user_id: i, receive_address: "This is receive_address of user#{i}", invoice_address: "This is invoice_address of user#{i}" ])
   for l in 1..3 do
-    CartInventory.create([ cart_id: "#{i}", inventory_id: l*5 ])
+    CartInventory.create([ cart_id: "#{i}", inventory_id: l*5, amount: l ])
   end
 end
 
