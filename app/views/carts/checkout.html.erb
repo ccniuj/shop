@@ -1,31 +1,4 @@
 <h1>carts#checkout</h1>
 <%= form_tag orders_path, :method => "post" do %>
-<div class="col-md-12"> 
-  <div class="group">
-  </div>
-
-  <table class="table table-hover">
-    <thead> 
-      <tr>
-        <td> # </td>
-        <td> ID </td>
-        <td> Name </td>
-        <td> Description </td>
-      </tr>
-    </thead>
-    <tbody>
-      <% @item.each do |i| %>
-        <tr>
-        <td> # </td>
-        <td> <%= i.id %> </td>
-        <td> <%= i.name %> </td>
-        <td> <%= i.description %> </td>
-        <%= hidden_field_tag "items[]", i.id %>
-        </tr>
-      <% end %> 
-    </tbody>
-  </table>
-  <%= submit_tag "Checkout", :class => "btn btn-sm btn-default", :name => "checkout" %>
-  <%= link_to("Back", carts_path, :class => "btn btn-sm btn-default") %>
-</div>
+  <%= render "list" %>
 <% end %>

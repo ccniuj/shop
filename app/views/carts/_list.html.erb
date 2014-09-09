@@ -1,0 +1,50 @@
+<div class="col-md-12"> 
+  <div class="group">
+  </div>
+  <table class="table table-hover">
+    <thead> 
+      <tr>
+        <td> # </td>
+        <td> ID </td>
+        <td> product_id </td>
+        <td> Name </td>
+        <td> Description </td>
+        <td> Color </td>
+        <td> Size </td>
+        <td> Price </td>
+        <td> Amount </td>
+        <td></td>
+      </tr>
+    </thead>
+    <tbody>
+      <% count = 0 %>
+      <% @inventory.each do |i| %>
+        <tr>
+        <td> # </td>
+        <td> <%= i.id %> </td>
+        <td> <%= i.product_id %> </td>
+        <td> <%= i.product.name %> </td>
+        <td> <%= i.product.description %> </td>
+        <td> <%= i.color %> </td>
+        <td> <%= i.size %> </td>
+        <td> <%= i.price %> </td>
+        <td> <%= a = @item_amount[count] %> </td>
+        <% unless @is_checkout %>
+          <td> <%= check_box_tag "items[]", i.id, :checked => true %></td>
+          <td> <%= link_to("Remove", remove_cart_path(i), :class => "btn btn-sm btn-default", :method => "post") %></td>
+        <% else %>  
+          <%= hidden_field_tag "items[]", i.id %>
+          <%= hidden_field_tag "amount[]", a %>
+        <% end %>
+        </tr>
+        <% count += 1 %>
+      <% end %> 
+    </tbody>
+  </table>
+  <%= submit_tag "Checkout", :class => "btn btn-sm btn-default", :name => "checkout" %>
+  <% unless @is_checkout %>
+    <%= submit_tag "Romove", :class => "btn btn-sm btn-default", :name => "remove" %>
+  <% else %>
+    <%= link_to("Back", carts_path, :class => "btn btn-sm btn-default") %>
+  <% end %>
+</div>

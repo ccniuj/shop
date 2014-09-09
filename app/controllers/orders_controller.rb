@@ -6,15 +6,13 @@ class OrdersController < ApplicationController
 
   def show
     @order = Order.find(params[:id])
-    @item = OrderProduct.where(order_id: @order.id)
+    @item = OrderInventory.where(order_id: @order.id)
   end
 
   def create
     @order = current_user.orders.build(:total_price => "99")
     @order.save!
-
-    add_order_product
-
+    add_order_inventory
     redirect_to edit_order_path(@order)
   end
 
@@ -28,22 +26,31 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     @order.update(order_params(@order)) 
     flash[:notice] = "Order has been updated"
-    redirect_to carts_path
+    redirect_to order_path(@order)
     #render plian: "hello"
   end
 
   private 
 
-  def add_order_product
-    @product = []
-    params[:items].each do |i|
-      @p = Product.find(i)
-      @product << @p
+  def add_order_inventory
+    @inventory = []
+    params[:items].each do |z|
+      @i = Inventory.find(z)
+      @inventory << @i
     end
 
     @cart = Cart.where(user_id: current_user).take
-    @product.each do |p|
-      @order.add!(p)
+
+    par = Hash.new
+    count = 0
+    @inventory.each do |i|
+      par[:order_id] = @order.id
+      par[:inventory_id] = i.id
+      par[:amount] = params[:amount][count]
+      @item = OrderInventory.new(par)
+      @item.save!
+      count += 1
+      #@order.add!(i)
       #@cart.remove!(p)
     end
   end
@@ -57,7 +64,7 @@ class OrdersController < ApplicationController
   def order_params(o)
     params[:order][:contact_id] = o.id
     params[:order][:status] = "1"
-    params.require(:order).permit(:contact_id, :pay_method, :ship_method, :status)  
+    params.require(:order).permit(:contact_id, :pay_method, :ship_method, :status)
   end
 
   def contact_params

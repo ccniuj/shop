@@ -54,10 +54,14 @@ class CartsController < ApplicationController
 
   def checkout
     @is_checkout = true
+
     @inventory = []
+    @item_amount = []
     params[:items].each do |i|
       @t = Inventory.find(i)
+      @n = CartInventory.where(cart_id: current_user.id, inventory_id: i).take.amount
       @inventory << @t
+      @item_amount << @n
     end
   end
   
