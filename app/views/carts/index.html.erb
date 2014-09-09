@@ -1,34 +1,4 @@
 <h1>carts#index</h1>
-<div class="col-md-12"> 
-  <div class="group">
-  </div>
-
-  <table class="table table-hover">
-    <thead> 
-      <tr>
-        <td> # </td>
-        <td> ID </td>
-        <td> Name </td>
-        <td> Description </td>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @product.each do |p| %>
-      
-      <tr>
-      <td> # </td>
-      <td> <%= p.id %> </td>
-      <td> <%= p.name %> </td>
-      <td> <%= p.description %> </td>
-      <td> <%= link_to("Remove", 
-                        remove_cart_path(p),
-                        :class => "btn btn-sm btn-default", 
-                        :method=> :post,
-                        data: { confirm: "Are you sure?" } )%></td> 
-    </tr>
-            <% end %> 
-      
-    </tbody>
-  </table>
-</div>
+<%= form_tag operation_cart_path(@cart), :method => "post" do %>
+  <%= render "list" %>
+<% end %>

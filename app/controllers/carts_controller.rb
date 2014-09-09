@@ -1,34 +1,68 @@
 class CartsController < ApplicationController
   before_action :authenticate_user!
+  
   def index
+    @is_checkout = false
     @cart = Cart.where(user_id: current_user.id).take
-    @item = CartProduct.where(cart_id: @cart.id)
-    @product = []
-    @item.each do |i|
-      @p = Product.where(id: i.product_id).take
-      @product << @p
+    @item = CartInventory.where(cart_id: @cart.id)
+    @inventory = []
+    @item_amount = []
+    @item.each do |z|
+      @i = Inventory.joins(:product).where(id: z.inventory_id).take
+      @n = z.amount
+      @inventory << @i
+      @item_amount << @n
     end
-    
   end
 
   def show
   end
 
-  def destroy
-    @cart = Cart.where(user_id: current_user.id)
-    @item = CartProduct.where(cart_id: @cart)
-    @cart_product = @item.where(product_id: params[:id])
-    @cart_product.destroy
-    redirect_to carts_path, :alert => 'Product has been removed'
+  def operation
+    unless params.has_key? :items
+      flash[:alert] = "You have to select at least 1 product"
+      redirect_to carts_path
+    else
+      if params.has_key? :checkout
+        checkout
+        render "carts/checkout"
+      elsif params.has_key? :remove
+        remove
+        redirect_to carts_path
+      end
+    end
   end
 
   def remove
-    @product = Product.find(params[:id])
-    @cart = Cart.where(:user_id => current_user.id).take
-    @cart = @cart.remove!(@product)
-    flash[:alert] = "Product has been removed"
-    redirect_to carts_path
+    if params.has_key? :items
+      params[:items].each do |i|
+        @inventory = Inventory.find(i)
+        @cart = Cart.where(:user_id => current_user.id).take
+        @cart.remove!(@inventory)
+      end
+      flash[:alert] = "Product has been removed"
+    else
+      @inventory = Inventory.find(params[:id])
+      @cart = Cart.where(:user_id => current_user.id).take
+      @cart.remove!(@inventory)
+      flash[:alert] = "Products have been removed"
+      redirect_to carts_path
+    end
   end
+  
+  private
+
+  def checkout
+    @is_checkout = true
+
+    @inventory = []
+    @item_amount = []
+    params[:items].each do |i|
+      @t = Inventory.find(i)
+      @n = CartInventory.where(cart_id: current_user.id, inventory_id: i).take.amount
+      @inventory << @t
+      @item_amount << @n
+    end
+  end
+  
 end
-
-

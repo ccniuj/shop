@@ -1,12 +1,10 @@
 class Cart < ActiveRecord::Base
   belongs_to :user
-  has_many :cart_products
-  has_many :items, :through => :cart_products, :source => :product
+  has_many :cart_inventories, dependent: :destroy
+  has_many :items, :through => :cart_inventories, :source => :inventory, dependent: :destroy
 
-  def remove!(product)
-    items.delete(product)
+  def remove!(inventory)
+    items.delete(inventory)
   end
-
-  def foo
-  end
+  
 end

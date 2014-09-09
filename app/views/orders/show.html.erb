@@ -1,0 +1,30 @@
+<h1>orders#show</h1>
+<div class="col-md-12"> 
+  <div class="group">
+  </div>
+
+  <table class="table table-hover">
+    <thead> 
+      <tr>
+        <td> # </td>
+        <td> ID </td>
+        <td> order_id </td>
+        <td> inventory_id </td>
+        <td> amount </td>
+        <td></td>
+      </tr>
+    </thead>
+    <tbody>
+      <% @item.each do |i| %>
+        <tr>
+        <td> # </td>
+        <td> <%= i.id %> </td>
+        <td> <%= i.order_id %> </td>
+        <td> <%= i.inventory_id %> </td>
+        <td> <%= i.amount %> </td>
+        </tr>
+      <% end %> 
+    </tbody>
+  </table>
+  <%= link_to("Back", carts_path, :class => "btn btn-sm btn-default") %>
+</div>
