@@ -13,8 +13,8 @@ for i in 1..3 do
     for k in 1..10 do
       Product.create([ name: "product#{k+j*10-10}", description: "description of product#{k+j*10-10}", size_note: "my size", attention: "don't put in ur mouth"])
       SubclassProduct.create([ subclass_id: j, product_id: k+j*10-10 ])
-      ProductInfo.create([ product_id: k+j*10-10, style: "weird", size: "XXL", amount: "1", price: i*100 ])
-      ProductImage.create([ product_info_id: k+j*10-10])
+      Inventory.create([ product_id: k+j*10-10, color: "black", size: "XXL", amount: "1", price: i*100 ])
+      InventoryImage.create([ inventory_id: k+j*10-10])
     end
   end
 end
@@ -37,12 +37,12 @@ for i in 1..10 do
 
     for k in 1..3 do
       Answer.create([member_question_id: "#{j}", user_id: "#{i}", content: "This is the answer no.#{k} of question no.#{j}"])
-      OrderProduct.create([ order_id: (i-1)*3+j, product_id: k*3 ])
+      OrderInventory.create([ order_id: (i-1)*3+j, inventory_id: k*3 ])
     end
   end
   Cart.create([ user_id: i, receive_address: "This is receive_address of user#{i}", invoice_address: "This is invoice_address of user#{i}" ])
   for l in 1..3 do
-    CartProduct.create([ cart_id: "#{i}", product_id: l*5 ])
+    CartInventory.create([ cart_id: "#{i}", inventory_id: l*5 ])
   end
 end
 

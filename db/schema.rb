@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140906035200) do
+ActiveRecord::Schema.define(version: 20140909105156) do
 
   create_table "answers", force: true do |t|
     t.integer  "member_question_id"
@@ -27,6 +27,14 @@ ActiveRecord::Schema.define(version: 20140906035200) do
     t.string   "title"
     t.text     "content"
     t.integer  "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "cart_inventories", force: true do |t|
+    t.integer  "cart_id"
+    t.integer  "inventory_id"
+    t.integer  "amount"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -79,11 +87,38 @@ ActiveRecord::Schema.define(version: 20140906035200) do
     t.datetime "updated_at"
   end
 
+  create_table "inventories", force: true do |t|
+    t.integer  "product_id"
+    t.string   "color"
+    t.string   "size"
+    t.integer  "amount"
+    t.integer  "price"
+    t.integer  "popularity"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "inventory_images", force: true do |t|
+    t.integer  "inventory_id"
+    t.string   "title"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "member_questions", force: true do |t|
     t.integer  "user_id"
     t.string   "title"
     t.text     "content"
     t.integer  "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "order_inventories", force: true do |t|
+    t.integer  "order_id"
+    t.integer  "inventory_id"
+    t.integer  "amount"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
