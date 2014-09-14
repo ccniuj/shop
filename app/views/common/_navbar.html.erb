@@ -18,10 +18,41 @@
               <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-              <li> <%= link_to("登出", destroy_user_session_path, 
-                               :method => :delete ) %></li>
+              <% if current_user.has_role? :member %>
+                <li><%= link_to("購物車", carts_path ) %></li>
+                <li><%= link_to("我的訂單", orders_path ) %></li>
+              <% end %>
+              <li> <%= link_to("帳號設定", edit_user_registration_path )%> </li>
+              <li> <%= link_to("登出", destroy_user_session_path, :method => :delete ) %> </li>
             </ul>
           </li>
+        <% end %>
+      </ul>
+      <ul class="nav navbar-nav navbar-left">
+        <% if !current_user || (current_user.has_role? :member) %>
+          <% Catalog.all.each do | catalog | %> <!-- 印出分類 -->
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <%= catalog.name %>  
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <% catalog.subclasses.all.each do | subclass | %> <!-- 印出子類別 -->
+                  <li>
+                    <%= link_to( subclass.name , catalog_subclass_path(catalog,subclass) )%>
+                  </li>
+                <% end %> <!-- 印出子類別 -->
+              </ul>
+            </li>
+          <% end %> <!-- 印出分類 -->
+        <% elsif current_user.has_role? :admin %>
+          <%= render "common/admin_nav" %>
+        <% elsif current_user.has_role? :service %>
+          <%= render "common/admin_nav" %>
+        <% elsif current_user.has_role? :shopper %>
+          <%= render "common/admin_nav" %>
+        <% elsif current_user.has_role? :analyst %>
+          <%= render "common/admin_nav" %>                            
         <% end %>
       </ul>
     </div><!-- /.navbar-collapse -->

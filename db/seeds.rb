@@ -28,6 +28,15 @@ for a in 101..110 do
   Bug.create([name: "user#{a}", email: "user#{a}@gmail.com", title: "bug#{a}", content: "This is bug no.#{a}", status: "#{a}"])
 end
 
+User.create([ email: "admin@gmail.com", password: "adminadmin", password_confirmation: "adminadmin"])
+User.find(1).add_role "admin"
+User.create([ email: "service@gmail.com", password: "serviceguy", password_confirmation: "serviceguy"])
+User.find(2).add_role "service"
+User.create([ email: "shopper@gmail.com", password: "shopperguy", password_confirmation: "shopperguy"])
+User.find(3).add_role "shopper"
+User.create([ email: "analyst@gmail.com", password: "analystguy", password_confirmation: "analystguy"])
+User.find(4).add_role "analyst"
+
 for i in 1..10 do
   Faq.create([question: "This is faq question no.#{i}", answer: "This is faq answer no.#{i}"])
   User.create([ email: "user#{i}@gmail.com", password: '11111111', password_confirmation: '11111111' ])
@@ -36,7 +45,6 @@ for i in 1..10 do
     Coupon.create([user_id: i , expired_at: "20150101", title: "coupon#{j}", content: "This is coupon no.#{j}", amount: "888"])
     MemberQuestion.create([user_id: "#{i}", title: "Member_question#{j}", content: "This is member_question no.#{j} of user no.#{i}", status: "#{j}"])
     Order.create([user_id: "#{i}", contact_id: "#{j}", pay_method: "#{j}", ship_method: "#{j}", status: "#{j}", total_price: "999"])
-
     for k in 1..3 do
       Answer.create([member_question_id: "#{j}", user_id: "#{i}", content: "This is the answer no.#{k} of question no.#{j}"])
       OrderInventory.create([ order_id: (i-1)*3+j, inventory_id: k*3 ])

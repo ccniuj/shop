@@ -1,0 +1,30 @@
+<table class="table table-hover">
+  <thead> 
+    <tr>
+      <td> # </td>
+      <td> 電子信箱 </td>
+      <td> 權限 </td>
+      <td> 變更權限 </td>
+      <td> 刪除使用者 </td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do | user | %>
+      <tr>
+        <td> # </td>
+        <td><%= user.email %></td>
+        <% if user.has_role? :admin %>
+          <td>權限管理員</td>
+        <% elsif user.has_role? :service %>
+          <td>客服經理</td>
+        <% elsif user.has_role? :shopper %>
+          <td>商品經理</td>
+        <% elsif user.has_role? :analyst %>
+          <td>數據分析師</td>
+        <% end %>         
+        <td><%= button_to "變更", admin_role_path( user ), data: { confirm: "你確定要變更這位使用者的管理權限嗎？" }, method: :get, :class => "btn btn-sm btn-default" %></td>
+        <td><%= button_to "刪除", admin_user_path( user ), data: { confirm: "你確定要刪除這位使用者嗎？" }, method: :delete, :class => "btn btn-sm btn-default" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
