@@ -13,18 +13,37 @@
       <tr>
         <td> # </td>
         <td><%= user.email %></td>
-        <% if user.has_role? :admin %>
-          <td>權限管理員</td>
-        <% elsif user.has_role? :service %>
-          <td>客服經理</td>
-        <% elsif user.has_role? :shopper %>
-          <td>商品經理</td>
-        <% elsif user.has_role? :analyst %>
-          <td>數據分析師</td>
-        <% end %>         
-        <td><%= button_to "變更", admin_role_path( user ), data: { confirm: "你確定要變更這位使用者的管理權限嗎？" }, method: :get, :class => "btn btn-sm btn-default" %></td>
+        <%= form_tag admin_user_change_path( user ), method: :post do %>
+          <td>
+            <% @roles.each do | role | %>
+              <% if user.has_role? role.name.to_sym %>
+                <%= check_box_tag( "roles[]", role.name, true ) %> <!-- , disabled: true -->
+              <% else %>
+                <%= check_box_tag( "roles[]", role.name, false ) %>
+              <% end %>
+              <% case role.name %>
+                <% when "admin" %>
+                  <%= label_tag("roles[]", "權限管理員") %>
+                <% when "service" %>
+                  <%= label_tag("roles[]", "客服經理") %>
+                <% when "shopper" %>
+                  <%= label_tag("roles[]", "商品經理") %>
+                <% when "analyst" %>
+                  <%= label_tag("roles[]", "數據分析師") %>
+              <% end %>
+              &nbsp
+            <% end %>
+          </td>
+          <td>
+            <%= submit_tag "儲存變更", :class => "btn btn-sm btn-default" %>
+          </td>
+        <% end %>
         <td><%= button_to "刪除", admin_user_path( user ), data: { confirm: "你確定要刪除這位使用者嗎？" }, method: :delete, :class => "btn btn-sm btn-default" %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<% @roles.each do | role | %>
+<%= role.name %>
+<% end %>

@@ -18,7 +18,7 @@
               <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
-              <% if current_user.has_role? :member %>
+              <% if !current_user.has_any_role? :admin, :service, :shopper, :analyst %>
                 <li><%= link_to("購物車", carts_path ) %></li>
                 <li><%= link_to("我的訂單", orders_path ) %></li>
               <% end %>
@@ -29,7 +29,7 @@
         <% end %>
       </ul>
       <ul class="nav navbar-nav navbar-left">
-        <% if !current_user || (current_user.has_role? :member) %>
+        <% if !current_user || (!current_user.has_any_role? :admin, :service, :shopper, :analyst) %>
           <% Catalog.all.each do | catalog | %> <!-- 印出分類 -->
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -45,14 +45,8 @@
               </ul>
             </li>
           <% end %> <!-- 印出分類 -->
-        <% elsif current_user.has_role? :admin %>
+        <% elsif current_user.has_any_role? :admin, :service, :shopper, :analyst %>
           <%= render "common/admin_nav" %>
-        <% elsif current_user.has_role? :service %>
-          <%= render "common/admin_nav" %>
-        <% elsif current_user.has_role? :shopper %>
-          <%= render "common/admin_nav" %>
-        <% elsif current_user.has_role? :analyst %>
-          <%= render "common/admin_nav" %>                            
         <% end %>
       </ul>
     </div><!-- /.navbar-collapse -->

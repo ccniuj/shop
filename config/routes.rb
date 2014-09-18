@@ -4,7 +4,9 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :roles
-    resources :users
+    resources :users do
+      post :change
+    end
     resources :catalogs do
       resources :subclasses
     end
