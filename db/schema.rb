@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140909105156) do
+ActiveRecord::Schema.define(version: 20140919154429) do
 
   create_table "answers", force: true do |t|
     t.integer  "member_question_id"
@@ -35,13 +35,6 @@ ActiveRecord::Schema.define(version: 20140909105156) do
     t.integer  "cart_id"
     t.integer  "inventory_id"
     t.integer  "amount"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "cart_products", force: true do |t|
-    t.integer  "cart_id"
-    t.integer  "product_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -123,13 +116,6 @@ ActiveRecord::Schema.define(version: 20140909105156) do
     t.datetime "updated_at"
   end
 
-  create_table "order_products", force: true do |t|
-    t.integer  "order_id"
-    t.integer  "product_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "orders", force: true do |t|
     t.integer  "user_id"
     t.integer  "contact_id"
@@ -139,22 +125,6 @@ ActiveRecord::Schema.define(version: 20140909105156) do
     t.integer  "total_price"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "product_images", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "product_info_id"
-  end
-
-  create_table "product_infos", force: true do |t|
-    t.string   "style"
-    t.string   "size"
-    t.integer  "amount"
-    t.integer  "price"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "product_id"
   end
 
   create_table "products", force: true do |t|
