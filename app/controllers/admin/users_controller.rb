@@ -1,7 +1,7 @@
 class Admin::UsersController < ApplicationController
 
   before_action :authenticate_user!
-  # authorize_actions_for User
+  authorize_actions_for User
 
   def index
     @users = []
@@ -22,6 +22,7 @@ class Admin::UsersController < ApplicationController
 
   def change
     @user = User.find(params[:user_id])
+    authorize_action_for @user
     @all_roles = [ :admin, :service, :shopper, :analyst ]
     
     @user_new_roles = []
@@ -31,22 +32,34 @@ class Admin::UsersController < ApplicationController
       end
     end
 
+    has_change = false
+    remove_last_one = false
+    last_one_role = ""
+
     @all_roles.each do | role |
       if !(is_last_one?(role))
         if (!(@user.has_role?(role)) && @user_new_roles.include?(role))
           @user.add_role role
+          has_change = true
         elsif (@user.has_role?(role) && !(@user_new_roles.include?(role)))
           @user.remove_role role
+          has_change = true
         end
-        flash[:notice] = "已成功變更此位使用者的權限"
       else
         if (!(@user.has_role?(role)) && @user_new_roles.include?(role))
           @user.add_role role
-          flash[:notice] = "已成功變更此位使用者的權限"
+          has_change = true
         elsif (@user.has_role?(role) && !(@user_new_roles.include?(role)))
-          flash[:notice] = "至少要有一位管理人員擁有 "+role.to_s+" 權限，其餘權限變更以完成"
+          remove_last_one = true
+          last_one_role = role.to_s
         end
       end
+    end
+
+    if remove_last_one
+      flash[:alert] = "至少要有一位管理人員擁有 "+last_one_role+" 權限，其餘權限變更以完成"
+    else
+      has_change ? flash[:notice] = "已成功變更此位使用者的權限" : flash[:alert] = "你並未進行任何變更"
     end
 
     redirect_to admin_roles_path

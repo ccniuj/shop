@@ -8,4 +8,8 @@ class UserAuthorizer < ApplicationAuthorizer
   	user.has_role? :admin
   end
 
+  def changeable_by?(user)
+  	user.has_role? :admin
+  end
+
 end

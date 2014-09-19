@@ -27,7 +27,8 @@ Authority.configure do |config|
     :create  => 'create',
     :edit    => 'update',
     :update  => 'update',
-    :destroy => 'delete'
+    :destroy => 'delete',
+    :change  => 'change',
   }
 
   # ABILITIES
@@ -42,7 +43,8 @@ Authority.configure do |config|
     :create => 'creatable',
     :read   => 'readable',
     :update => 'updatable',
-    :delete => 'deletable'
+    :delete => 'deletable',
+    :change => 'changeable'
   }
 
   # LOGGER
