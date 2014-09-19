@@ -1,0 +1,28 @@
+<table class="table table-hover">
+  <thead> 
+    <tr>
+      <td> # </td>
+      <td> 電子信箱 </td>
+      <td> 登入次數 </td>
+      <td> 註冊時間 </td>
+      <td> 上次上線時間 </td>
+      <td> 刪除使用者 </td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do | user | %>
+      <tr>
+      	<td> # </td>
+        <td><%= user.email %></td>
+        <td><%= user.sign_in_count %></td>
+        <td><%= user.created_at.to_s(:long) %></td>
+        <% if user.last_sign_in_at == nil %> <!-- TEMPORARY adjustment, need remove later -->
+          <td>nil</td>
+        <% else %>
+          <td><%= user.last_sign_in_at.to_s(:long) %></td>
+        <% end %> <!-- TEMPORARY adjustment, need remove later -->
+        <td><%= button_to "刪除", admin_user_path( user ), data: { confirm: "你確定要刪除這位使用者嗎？" }, method: :delete, :class => "btn btn-sm btn-default" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

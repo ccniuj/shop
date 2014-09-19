@@ -1,6 +1,20 @@
 Rails.application.routes.draw do
   root 'home#index'
   get 'home/index'
+
+  namespace :admin do
+    resources :roles
+    resources :users do
+      post :change
+    end
+    resources :catalogs do
+      resources :subclasses
+    end
+  end
+
+  resources :catalogs do
+    resources :subclasses
+  end
   
   resources :carts do
     member do

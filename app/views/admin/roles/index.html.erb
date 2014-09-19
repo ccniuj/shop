@@ -1,0 +1,43 @@
+<table class="table table-hover">
+  <thead> 
+    <tr style="text-align:center;">
+      <td> # </td>
+      <td> 電子信箱 </td>
+      <!-- <td> 權限 </td> -->
+      <td> 變更權限 </td>
+      <td> 刪除使用者 </td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do | user | %>
+      <tr style="text-align:center;">
+        <td> # </td>
+        <td><%= user.email %></td>
+        <td>
+        <%= form_tag admin_user_change_path( user ), method: :post do %>
+            <% @roles.each do | role | %>
+              <% if user.has_role? role.name.to_sym %>
+                <%= check_box_tag( "roles[]", role.name, true ) %> <!-- , disabled: true -->
+              <% else %>
+                <%= check_box_tag( "roles[]", role.name, false ) %>
+              <% end %>
+              <% case role.name %>
+                <% when "admin" %>
+                  <%= label_tag("roles[]", "權限管理員") %>
+                <% when "service" %>
+                  <%= label_tag("roles[]", "客服經理") %>
+                <% when "shopper" %>
+                  <%= label_tag("roles[]", "商品經理") %>
+                <% when "analyst" %>
+                  <%= label_tag("roles[]", "數據分析師") %>
+              <% end %>
+              &nbsp
+            <% end %>
+            <%= submit_tag "儲存變更", :class => "btn btn-sm btn-default" %>
+        <% end %>
+        </td>
+        <td><%= button_to "刪除", admin_user_path( user ), data: { confirm: "你確定要刪除這位使用者嗎？" }, method: :delete, :class => "btn btn-sm btn-default" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
