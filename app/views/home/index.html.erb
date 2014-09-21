@@ -1,2 +1,67 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<a href="/home/newest">
+  <h1 style="text-align:center;">The Newest Products</h1>
+</a>
+
+<table class="table table-hover">
+  <thead> 
+    <tr style="text-align:center;">
+      <td> # </td>
+      <td> 名稱 </td>
+      <td> 尺寸 </td>
+      <td> 價錢 </td>
+    </tr>
+  </thead>
+  <tbody>
+  	  <% @newest_products.each do | newest | %>
+        <tr style="text-align:center;">
+          <td><%= newest.id %></td>
+          <td><%= newest.name %></td>
+          <td>
+          	<% this_product_size = [] %>
+            <% newest.inventories.each do | inventory | %> 
+              <% this_product_size << inventory.size %>
+            <% end %>
+            <% this_product_size.uniq.each do | size | %>
+              <%= size %>
+            <% end %>
+          </td>
+          <td><%= newest.price %></td>
+        </tr>
+      <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<a href="/home/hotest">
+  <h1 style="text-align:center;">The Hotest Products</h1>
+</a>
+
+<table class="table table-hover">
+  <thead> 
+    <tr style="text-align:center;">
+      <td> # </td>
+      <td> 名稱 </td>
+      <td> 尺寸 </td>
+      <td> 價錢 </td>
+    </tr>
+  </thead>
+  <tbody>
+  	  <% @hotest_products.each do | hotest | %>
+        <tr style="text-align:center;">
+          <td><%= hotest.id %></td>
+          <td><%= hotest.name %></td>
+          <td>
+          	<% this_product_size = [] %>
+            <% hotest.inventories.each do | inventory | %> 
+              <% this_product_size << inventory.size %>
+            <% end %>
+            <% this_product_size.uniq.each do | size | %>
+              <%= size %>
+            <% end %>
+          </td>
+          <td><%= hotest.price %></td>
+        </tr>
+      <% end %>
+  </tbody>
+</table>

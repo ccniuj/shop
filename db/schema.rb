@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140919154429) do
+ActiveRecord::Schema.define(version: 20140920094153) do
 
   create_table "answers", force: true do |t|
     t.integer  "member_question_id"
@@ -85,7 +85,6 @@ ActiveRecord::Schema.define(version: 20140919154429) do
     t.string   "color"
     t.string   "size"
     t.integer  "amount"
-    t.integer  "price"
     t.integer  "popularity"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -134,6 +133,9 @@ ActiveRecord::Schema.define(version: 20140919154429) do
     t.text     "attention"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "price"
+    t.integer  "total_amout"
+    t.integer  "total_popularity"
   end
 
   create_table "roles", force: true do |t|

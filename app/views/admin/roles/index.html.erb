@@ -36,7 +36,9 @@
             <%= submit_tag "儲存變更", :class => "btn btn-sm btn-default" %>
         <% end %>
         </td>
-        <td><%= button_to "刪除", admin_user_path( user ), data: { confirm: "你確定要刪除這位使用者嗎？" }, method: :delete, :class => "btn btn-sm btn-default" %></td>
+        <td>
+          <%= button_to "刪除", admin_user_path( user ), data: { confirm: "你確定要刪除這位使用者嗎？" }, method: :delete, :class => "btn btn-sm btn-default" %>
+        </td>
       </tr>
     <% end %>
   </tbody>

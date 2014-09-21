@@ -11,12 +11,18 @@ for i in 1..3 do
   for j in 1..3 do
     Subclass.create([ name: "subclass#{j} under catalog#{i}", description: "description of subclass#{j} under catalog#{i}", catalog_id: i])
     for k in 1..10 do
-      Product.create([ name: "product#{k+j*10-10}", description: "description of product#{k+j*10-10}", size_note: "my size", attention: "don't put in ur mouth"])
-      SubclassProduct.create([ subclass_id: j, product_id: k+j*10-10 ])
-      for z in 1..3 do
-        Inventory.create([ product_id: k+j*10-10, color: "black", size: "XXL", amount: "20", price: (i+z)*100 ])
+      total_amount_temp = 0
+      total_popularity_temp = 0
+      for l in 1..3 do
+        Inventory.create([ product_id: k+j*10+i*30-40, color: "black", size: "XXL", amount: 270, popularity: 393-l-k*3-j*30-i*90])
+        total_amount_temp += 270
+        total_popularity_temp += 393-l-k*3-j*30-i*90
+        for m in 1..3 do
+          InventoryImage.create([ inventory_id: l+k*3+j*30+i*90-123 ])
+        end
       end
-      InventoryImage.create([ inventory_id: k+j*10-10])
+      Product.create([ name: "product#{k+j*10+i*30-40}", description: "description of product#{k+j*10+i*30-40}", size_note: "my size", attention: "don't put in ur mouth", price: i*1000+j*100+k, total_amout: 810, total_popularity: total_popularity_temp])
+      SubclassProduct.create([ subclass_id: j, product_id: k+j*10+i*30-40 ])
     end
   end
 end

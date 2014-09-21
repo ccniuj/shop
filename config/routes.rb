@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root 'home#index'
   get 'home/index'
+  get 'home/newest'
+  get 'home/hotest'
 
   namespace :admin do
     resources :roles
