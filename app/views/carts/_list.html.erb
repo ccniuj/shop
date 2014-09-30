@@ -27,7 +27,7 @@
         <td> <%= i.product.description %> </td>
         <td> <%= i.color %> </td>
         <td> <%= i.size %> </td>
-        <td> <%= i.price %> </td>
+        <td> <%= i.product.price %> </td>
         <td> <%= a = @item_amount[count] %> </td>
         <% unless @is_checkout %>
           <td> <%= check_box_tag "items[]", i.id, :checked => true %></td>
