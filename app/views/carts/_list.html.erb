@@ -1,3 +1,19 @@
+<script>
+$(document).ready(function(){
+  $('#selectAll').click(function() {
+    if (this.checked) {
+      $(':checkbox').each(function() {
+        this.checked = true;                        
+      });
+    } else {
+      $(':checkbox').each(function() {
+        this.checked = false;                        
+      });
+    } 
+  });
+})
+</script>
+
 <div class="col-md-12"> 
   <div class="group">
   </div>
@@ -13,7 +29,9 @@
         <td> Size </td>
         <td> Price </td>
         <td> Amount </td>
-        <td></td>
+        <% unless @is_checkout %>
+          <td><input type="checkbox" id="selectAll" value="selectAll"> Select / Deselect All</td>
+        <% end %>
       </tr>
     </thead>
     <tbody>
@@ -30,7 +48,7 @@
         <td> <%= i.product.price %> </td>
         <td> <%= a = @item_amount[count] %> </td>
         <% unless @is_checkout %>
-          <td> <%= check_box_tag "items[]", i.id, :checked => true %></td>
+          <td> <%= check_box_tag "items[]", i.id %></td>
           <td> <%= link_to("Remove", remove_cart_path(i), :class => "btn btn-sm btn-default", :method => "post") %></td>
         <% else %>  
           <%= hidden_field_tag "items[]", i.id %>
