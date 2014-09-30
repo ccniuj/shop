@@ -21,6 +21,7 @@
               <% if !current_user.has_any_role? :admin, :service, :shopper, :analyst %>
                 <li><%= link_to("購物車", carts_path ) %></li>
                 <li><%= link_to("我的訂單", orders_path ) %></li>
+                <li><%= link_to("會員提問", member_questions_path ) %></li>
               <% end %>
               <li> <%= link_to("帳號設定", edit_user_registration_path )%> </li>
               <li> <%= link_to("登出", destroy_user_session_path, :method => :delete ) %> </li>

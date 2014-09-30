@@ -1,0 +1,32 @@
+<div class="col-md-12">
+  <div class="group">
+    <%= link_to("New Question", new_member_question_path(@mq) , :class => "btn btn-warning pull-right")%>
+  </div>
+  <h2>Questions</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Status</th>
+        <th colspan="2"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @mqs.each do |mq| %> 
+        <tr>
+          <td> <%= link_to member_question_path(mq) do %><%= mq.title %><% end %> </td>
+          <td> <%= mq.status%> </td>
+          <td> <%= link_to("Edit", 
+                           edit_member_question_path(mq), 
+                           :class => "btn btn-default btn-xs")%>
+
+               <%= link_to("Delete", 
+                           member_question_path(mq), 
+                           :class => "btn btn-default btn-xs ",
+                           :method => :delete,
+                           data: { confirm: "Are you sure?" } )%></td>
+        </tr>
+      <% end %> 
+    </tbody>
+  </table>
+</div>
