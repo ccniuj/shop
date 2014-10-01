@@ -13,6 +13,9 @@ Rails.application.routes.draw do
       resources :subclasses
     end
     resources :bugs
+    resources :member_questions do
+      resources :answers
+    end
   end
 
   resources :catalogs do
