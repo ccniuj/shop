@@ -1,0 +1,33 @@
+<div class="col-md-12">
+  <h2>Bug Reports</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Status</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th colspan="2"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @bugs.order("status ASC").each do |b| %> 
+        <tr>
+          <td> <%= link_to admin_bug_path(b) do %><%= b.title %><% end %> </td>
+          <td> <%= b.status%> </td>
+          <td> <%= b.name%> </td>
+          <td> <%= b.email%> </td>
+          <td> <%= link_to("Edit", 
+                           edit_admin_bug_path(b), 
+                           :class => "btn btn-default btn-xs")%>
+
+               <%= link_to("Delete", 
+                           admin_bug_path(b), 
+                           :class => "btn btn-default btn-xs ",
+                           :method => :delete,
+                           data: { confirm: "Are you sure?" } )%></td>
+        </tr>
+      <% end %> 
+    </tbody>
+  </table>
+</div>
