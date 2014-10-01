@@ -30,7 +30,9 @@ Rails.application.routes.draw do
   end
   resources :products
   resources :orders 
-  resources :member_questions
+  resources :member_questions do
+    resources :answers
+  end
   resources :bugs
 
   devise_for :users

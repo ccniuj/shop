@@ -7,6 +7,7 @@ class MemberQuestionsController < ApplicationController
 
   def show 
     @mq = current_user.member_questions.find(params[:id])
+    @answer = Answer.new
   end
   
   def new 
