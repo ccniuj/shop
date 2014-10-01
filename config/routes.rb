@@ -12,6 +12,11 @@ Rails.application.routes.draw do
     resources :catalogs do
       resources :subclasses
     end
+    resources :faqs
+    resources :bugs
+    resources :member_questions do
+      resources :answers
+    end
   end
 
   resources :catalogs do
@@ -26,6 +31,11 @@ Rails.application.routes.draw do
   end
   resources :products
   resources :orders 
+  resources :member_questions do
+    resources :answers
+  end
+  resources :bugs
+  resources :faqs
 
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.

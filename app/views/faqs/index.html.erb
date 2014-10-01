@@ -1,0 +1,20 @@
+<div class="col-md-12">
+  <h2>FAQs</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Question</th>
+        <th>Answer</th>
+        <th colspan="2"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @faqs.each do |f| %> 
+        <tr>
+          <td> <%= f.question %> </td>
+          <td> <%= f.answer %> </td>
+        </tr>
+      <% end %> 
+    </tbody>
+  </table>
+</div>

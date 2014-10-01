@@ -52,7 +52,7 @@ for i in 1..10 do
     MemberQuestion.create([user_id: "#{i}", title: "Member_question#{j}", content: "This is member_question no.#{j} of user no.#{i}", status: "#{j}"])
     Order.create([user_id: "#{i}", contact_id: "#{j}", pay_method: "#{j}", ship_method: "#{j}", status: "#{j}", total_price: "999"])
     for k in 1..3 do
-      Answer.create([member_question_id: "#{j}", user_id: "#{i}", content: "This is the answer no.#{k} of question no.#{j}"])
+      Answer.create([member_question_id: (i-1)*3+j, user_id: "#{i}", content: "This is the answer no.#{k} of question no.#{j}"])
       OrderInventory.create([ order_id: (i-1)*3+j, inventory_id: k*3 ])
     end
   end
