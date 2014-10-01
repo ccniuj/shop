@@ -35,6 +35,7 @@ Rails.application.routes.draw do
     resources :answers
   end
   resources :bugs
+  resources :faqs
 
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
