@@ -1,0 +1,34 @@
+<div class="col-md-12">
+  <div class="group">
+    <%= link_to("New FAQ", new_admin_faq_path(@faq) , :class => "btn btn-warning pull-right")%>
+  </div>
+  <h2>FAQs</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Question</th>
+        <th>Answer</th>
+        <th>Created_at</th>
+        <th colspan="2"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @faqs.each do |f| %> 
+        <tr>
+          <td> <%= f.question %> </td>
+          <td> <%= f.answer %> </td>
+          <td> <%= f.created_at%> </td>
+          <td> <%= link_to("Edit", 
+                           edit_admin_faq_path(f), 
+                           :class => "btn btn-default btn-xs")%>
+
+               <%= link_to("Delete", 
+                           admin_faq_path(f), 
+                           :class => "btn btn-default btn-xs ",
+                           :method => :delete,
+                           data: { confirm: "Are you sure?" } )%></td>
+        </tr>
+      <% end %> 
+    </tbody>
+  </table>
+</div>
