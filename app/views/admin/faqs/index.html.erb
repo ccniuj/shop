@@ -1,32 +1,32 @@
+<h2 class="text-center">常見問題</h2>
 <div class="col-md-12">
   <div class="group">
-    <%= link_to("New FAQ", new_admin_faq_path(@faq) , :class => "btn btn-warning pull-right")%>
+    <%= link_to("新增常見問題", new_admin_faq_path(@faq) , :class => "btn btn-warning pull-right")%>
   </div>
-  <h2>FAQs</h2>
-  <table class="table">
+  <table class="table table-hover">
     <thead>
       <tr>
-        <th>Question</th>
-        <th>Answer</th>
-        <th>Created_at</th>
+        <th>問題</th>
+        <th>回答</th>
+        <th>建立時間</th>
         <th colspan="2"></th>
       </tr>
     </thead>
     <tbody>
       <% @faqs.each do |f| %> 
         <tr>
-          <td> <%= f.question %> </td>
-          <td> <%= f.answer %> </td>
+          <td> <%= truncate(f.question, length: 23) %> </td>
+          <td> <%= truncate(f.answer, length: 33) %> </td>
           <td> <%= f.created_at%> </td>
-          <td> <%= link_to("Edit", 
+          <td> <%= link_to("編輯", 
                            edit_admin_faq_path(f), 
-                           :class => "btn btn-default btn-xs")%>
+                           :class => "btn btn-default btn-sm")%>
 
-               <%= link_to("Delete", 
+               <%= link_to("刪除", 
                            admin_faq_path(f), 
-                           :class => "btn btn-default btn-xs ",
+                           :class => "btn btn-default btn-sm",
                            :method => :delete,
-                           data: { confirm: "Are you sure?" } )%></td>
+                           data: { confirm: "確認刪除?" } )%></td>
         </tr>
       <% end %> 
     </tbody>

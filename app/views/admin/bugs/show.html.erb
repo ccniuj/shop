@@ -1,16 +1,16 @@
 <div class="col-md-4 col-md-offset-4">
   <h1 class="text-center"><%= @bug.title %></h1>
-  <div>Content: 
+  <div>內容: 
     <%= @bug.content %>
   </div>
-  <div>Name:
+  <div>回報人姓名:
     <%= @bug.name %>
   </div>
-  <div>Email:
+  <div>電子郵件:
     <%= @bug.email %>
   </div>
   <%= simple_form_for [:admin, @bug]  do |f| %>
-    <div>Status:
+    <div>狀態:
       <%= f.select :status, [['未處理',1],[' 處理中',2],['已處理',3]] %>
       <%= f.submit "確認", :disable_with => '處理中...'%> 
     </div>
