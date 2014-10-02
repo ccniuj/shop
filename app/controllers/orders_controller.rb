@@ -74,6 +74,7 @@ class OrdersController < ApplicationController
   end
 
   def contact_params
+    params[:contact] = params[:order][:contact]
     params.require(:contact).permit(:name, :email, :cellphone, :address)
   end
 end

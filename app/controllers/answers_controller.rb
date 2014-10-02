@@ -4,7 +4,7 @@ class AnswersController < ApplicationController
     @mq = MemberQuestion.find(params[:member_question_id])
     @answer = @mq.answers.new(answer_params)
     if @answer.save!
-      redirect_to member_question_path(@mq), :notice => "Answer is updated succesfully."
+      redirect_to member_question_path(@mq), :notice => "成功新增回覆"
     else
       render :show
     end

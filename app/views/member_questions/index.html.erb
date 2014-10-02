@@ -1,14 +1,14 @@
 <div class="col-md-12">
   <div class="group">
-    <%= link_to("New Question", new_member_question_path(@mq) , :class => "btn btn-warning pull-right")%>
+    <%= link_to("新增提問", new_member_question_path(@mq) , :class => "btn btn-warning pull-right")%>
   </div>
-  <h2>Questions</h2>
-  <table class="table">
+  <h2 class="text-center">會員提問</h2>
+  <table class="table table-hover">
     <thead>
       <tr>
-        <th>Title</th>
-        <th>Status</th>
-        <th>Created_at</th>
+        <th>標題</th>
+        <th>狀態</th>
+        <th>時間</th>
         <th colspan="2"></th>
       </tr>
     </thead>
@@ -18,15 +18,15 @@
           <td> <%= link_to member_question_path(mq) do %><%= mq.title %><% end %> </td>
           <td> <%= mq.status%> </td>
           <td> <%= mq.created_at%> </td>
-          <td> <%= link_to("Edit", 
+          <td> <%= link_to("編輯", 
                            edit_member_question_path(mq), 
-                           :class => "btn btn-default btn-xs")%>
+                           :class => "btn btn-default btn-sm")%>
 
-               <%= link_to("Delete", 
+               <%= link_to("刪除", 
                            member_question_path(mq), 
-                           :class => "btn btn-default btn-xs ",
+                           :class => "btn btn-default btn-sm ",
                            :method => :delete,
-                           data: { confirm: "Are you sure?" } )%></td>
+                           data: { confirm: "確定刪除?" } )%></td>
         </tr>
       <% end %> 
     </tbody>

@@ -20,9 +20,10 @@ class MemberQuestionsController < ApplicationController
 
   def create
     @mq = current_user.member_questions.new(mq_params)
-    if @mq.save!
-      redirect_to member_questions_path, :notice => "Question is created succesfully."
+    if @mq.save
+      redirect_to member_questions_path, :notice => "成功新增提問"
     else
+      flash[:alert] = "必須輸入標題、內容"
       render :new
     end
   end
@@ -30,8 +31,9 @@ class MemberQuestionsController < ApplicationController
   def update 
     @mq = current_user.member_questions.find(params[:id])
     if @mq.update(mq_params)
-      redirect_to member_questions_path, :notice => "Question is updated succesfully."
+      redirect_to member_questions_path, :notice => "成功更新提問"
     else
+      flash[:alert] = "必須輸入標題、內容"
       render :edit
     end
   end
@@ -39,7 +41,7 @@ class MemberQuestionsController < ApplicationController
   def destroy
     @mq = current_user.member_questions.find(params[:id])
     @mq.destroy
-    redirect_to member_questions_path, :alert => "Question is deletted succesfully."
+    redirect_to member_questions_path, :alert => "成功刪除提問"
   end
 
   private 
