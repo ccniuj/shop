@@ -3,32 +3,39 @@ class OrdersController < ApplicationController
 
   def index
     @orders = Order.where(user_id: current_user.id)
+    @contacts = current_user.contacts.all
   end
 
   def show
     @order = Order.find(params[:id])
     @item = OrderInventory.where(order_id: @order.id)
+    @inventories = Inventory.all
+    @contacts = current_user.contacts.all
   end
 
   def create
-    @order = current_user.orders.build(:total_price => "99")
+    @order = current_user.orders.build(
+      contact_id: current_user.contacts.first.id,
+      status: 1,
+      total_price: params[:total_price],
+      pay_method: 1,
+      ship_method: 1 )
     @order.save!
     add_order_inventory
-    redirect_to edit_order_path(@order)
+    redirect_to edit_order_path(@order), :notice => "成功新增訂單"
   end
 
   def edit
     @order = Order.find(params[:id])
-    @contact = Contact.new
+    @contact = current_user.contacts.first
   end
 
   def update
-    update_contact
+    create_contact
+    # create or update 
     @order = Order.find(params[:id])
-    @order.update(order_params(@order)) 
-    flash[:notice] = "Order has been updated"
-    redirect_to order_path(@order)
-    #render plian: "hello"
+    @order.update(order_params) 
+    redirect_to order_path(@order), :notice => "成功更新訂單"
   end
 
   private 
@@ -56,19 +63,18 @@ class OrdersController < ApplicationController
     end
   end
 
-  def update_contact
-    @contact = current_user.contacts.build
+  def create_contact
+    @contact = current_user.contacts.new(contact_params)
     @contact.save!
-    @contact.update(contact_params)
   end
-
-  def order_params(o)
-    params[:order][:contact_id] = o.id
-    params[:order][:status] = "1"
+  
+  def order_params
+    params[:order][:contact_id] = current_user.contacts.last.id
     params.require(:order).permit(:contact_id, :pay_method, :ship_method, :status)
   end
 
   def contact_params
-    params.require(:contact).permit(:name, :cellphone, :address)
+    params[:contact] = params[:order][:contact]
+    params.require(:contact).permit(:name, :email, :cellphone, :address)
   end
 end

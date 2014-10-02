@@ -15,54 +15,48 @@ $(document).ready(function(){
 </script>
 
 <div class="col-md-12"> 
-  <div class="group">
-  </div>
   <table class="table table-hover">
     <thead> 
       <tr>
-        <td> # </td>
-        <td> ID </td>
-        <td> product_id </td>
-        <td> Name </td>
-        <td> Description </td>
-        <td> Color </td>
-        <td> Size </td>
-        <td> Price </td>
-        <td> Amount </td>
         <% unless @is_checkout %>
-          <td><input type="checkbox" id="selectAll" value="selectAll"> Select / Deselect All</td>
+          <td><input type="checkbox" id="selectAll" value="selectAll" checked></td>
         <% end %>
+        <th> 商品名稱 </th>
+        <th> 備註 </th>
+        <th> 顏色 </th>
+        <th> 尺寸 </th>
+        <th> 單價 </th>
+        <th> 數量 </th>
       </tr>
     </thead>
     <tbody>
       <% count = 0 %>
       <% @inventory.each do |i| %>
         <tr>
-        <td> # </td>
-        <td> <%= i.id %> </td>
-        <td> <%= i.product_id %> </td>
+        <% unless @is_checkout %>
+          <td> <%= check_box_tag "items[]", i.id, select: true %></td>
+        <% else %>  
+          <%= hidden_field_tag "items[]", i.id %>
+          <%= hidden_field_tag "amount[]", @item_amount[count] %>
+        <% end %>
         <td> <%= i.product.name %> </td>
         <td> <%= i.product.description %> </td>
         <td> <%= i.color %> </td>
         <td> <%= i.size %> </td>
         <td> <%= i.product.price %> </td>
-        <td> <%= a = @item_amount[count] %> </td>
-        <% unless @is_checkout %>
-          <td> <%= check_box_tag "items[]", i.id %></td>
-          <td> <%= link_to("Remove", remove_cart_path(i), :class => "btn btn-sm btn-default", :method => "post") %></td>
-        <% else %>  
-          <%= hidden_field_tag "items[]", i.id %>
-          <%= hidden_field_tag "amount[]", a %>
-        <% end %>
+        <td> <%= @item_amount[count] %> </td>
         </tr>
         <% count += 1 %>
       <% end %> 
+      <%= hidden_field_tag "total_price", @total_price %>
     </tbody>
   </table>
-  <%= submit_tag "Checkout", :class => "btn btn-sm btn-default", :name => "checkout" %>
   <% unless @is_checkout %>
-    <%= submit_tag "Romove", :class => "btn btn-sm btn-default", :name => "remove" %>
+    <%= submit_tag "結帳", :class => "btn btn-sm btn-primary", :name => "checkout" %>
+    <%= submit_tag "移除", :class => "btn btn-sm btn-default", :name => "remove" %>
   <% else %>
-    <%= link_to("Back", carts_path, :class => "btn btn-sm btn-default") %>
+    <p>總金額: <%= @total_price %> </p>
+    <%= submit_tag "確認結帳", :class => "btn btn-sm btn-primary", :name => "checkout" %>
+    <%= link_to("回到購物車", carts_path, :class => "btn btn-sm btn-default") %>
   <% end %>
 </div>

@@ -6,7 +6,7 @@ class BugsController < ApplicationController
   def create 
     @bug = Bug.new(bug_params)
     if @bug.save!
-      redirect_to root_path, :notice => "Report is created succesfully."
+      redirect_to root_path, :notice => "成功新增錯誤回報"
     else
       render :new
     end

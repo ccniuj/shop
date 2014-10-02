@@ -13,7 +13,7 @@ class Admin::BugsController < ApplicationController
   def update 
     @bug = Bug.find(params[:id])
     if @bug.update(bug_params)
-      redirect_to admin_bugs_path, :notice => "Report status is updated succesfully. "
+      redirect_to admin_bugs_path, :notice => "成功更新錯誤回報"
     else
       render :show
     end

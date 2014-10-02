@@ -57,12 +57,18 @@ class CartsController < ApplicationController
 
     @inventory = []
     @item_amount = []
+    @total_price = 0
+
     params[:items].each do |i|
       @t = Inventory.find(i)
       @n = CartInventory.where(cart_id: current_user.id, inventory_id: i).take.amount
       @inventory << @t
       @item_amount << @n
+      @total_price += @t.product.price * @n
     end
+
+    # implement event algorothm here
+
   end
   
 end

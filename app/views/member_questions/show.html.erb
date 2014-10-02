@@ -1,34 +1,34 @@
-<div class="col-md-4 col-md-offset-4">
+<div class="col-md-6 col-md-offset-3">
   <h1 class="text-center"><%= @mq.title %></h1>
-  <div>created_at: 
+  <div>提問時間: 
     <%= @mq.created_at %>
   </div>
-  <div>Content: 
+  <div>內容: 
     <%= @mq.content %>
   </div>
-  <div>Status: 
+  <div>狀態: 
     <%= @mq.status %>
   </div>
   <hr/>
 
   <% @mq.answers.order("created_at ASC").each do |ans| %>
-      <div>Created_at:
+      <div>回覆時間:
         <%= ans.created_at %>
       </div>
-      <div>User:
+      <div>回覆人:
         <%= ans.user.id %>
       </div>
-      <div>Content:
+      <div>內容:
         <%= ans.content %>
       </div>
       <br/>
     <% end %>
     
     <%= simple_form_for [@mq, @answer] do |f| %>
-      <%= f.input :content, :input_html => { :class => "form-control"} %>
+      <%= f.input :content,:label => "內容", :input_html => { :class => "form-control"} %>
       <hr>
       <div class="form-actions">
-        <%= f.submit "Submit", :disable_with => 'Submiting...', :class => "btn btn-primary"%> 
+        <%= f.submit "確認", :disable_with => 'Submiting...', :class => "btn btn-primary"%> 
       </div>
     <% end %> 
 

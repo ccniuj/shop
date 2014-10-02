@@ -1,30 +1,27 @@
-<h1>orders#index</h1>
+<h1 class="text-center">我的訂單</h1>
 <div class="col-md-12"> 
   <div class="group">
   </div>
   <table class="table table-hover">
     <thead> 
       <tr>
-        <td> # </td>
-        <td> ID </td>
-        <td> contact_id </td>
-        <td> pay_method </td>
-        <td> ship_method </td>
-        <td> status </td>
-        <td> total_price </td>
-        <td></td>
+        <th> 訂單編號 </th>
+        <th> 收件人 </th>
+        <th> 付款方式 </th>
+        <th> 收件方式 </th>
+        <th> 總金額 </th>
+        <th> 狀態 </th>
       </tr>
     </thead>
     <tbody>
       <% @orders.each do |o| %>
         <tr>
-        <td> # </td>
-        <td> <%= o.id %> </td>
-        <td> <%= o.contact_id %> </td>
+        <td> <%= link_to order_path(o) do%><%= o.id %><% end %> </td>
+        <td> <%= @contacts.find(o.contact_id).name %> </td>
         <td> <%= o.pay_method %> </td>
         <td> <%= o.ship_method %> </td>
-        <td> <%= o.status %> </td>
         <td> <%= o.total_price %> </td>
+        <td> <%= o.status %> </td>
         </tr>
       <% end %> 
     </tbody>

@@ -21,7 +21,7 @@ class Admin::FaqsController < ApplicationController
   def create 
     @faq = Faq.new(faq_params)
     if @faq.save!
-      redirect_to admin_faqs_path, :notice => "FAQ is created succesfully."
+      redirect_to admin_faqs_path, :notice => "成功新增常見問題"
     else
       render :new
     end
@@ -30,7 +30,7 @@ class Admin::FaqsController < ApplicationController
   def update 
     @faq = Faq.find(params[:id])
     if @faq.update(faq_params)
-      redirect_to admin_faqs_path, :notice => "FAQ is updated succesfully."
+      redirect_to admin_faqs_path, :notice => "成功更新常見問題"
     else
       render :edit
     end
@@ -39,7 +39,7 @@ class Admin::FaqsController < ApplicationController
   def destroy
     @faq = Faq.find(params[:id])
     @faq.destroy
-    redirect_to admin_faqs_path, :alert => "FAQ is destroyed succesfully."
+    redirect_to admin_faqs_path, :alert => "成功刪除常見問題"
   end
   private
 
