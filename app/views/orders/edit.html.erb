@@ -1,43 +1,52 @@
-<h1>orders#edit</h1>
-<hr>
-<%= simple_form_for @order, url: order_path(@order), method: :patch do |f| %>
-  <%= fields_for @contact do |c| %>
-    <h3>Add contact</h3>
-    <p>
-      <%= c.label :name %><br>
-      <%= c.text_field :name, :class => "form-control" %>
-    </p>
-    <p>
-      <%= c.label :cellphone %><br>
-      <%= c.phone_field :cellphone, :class => "form-control" %>
-    </p>
-    <p>
-      <%= c.label :address %><br>
-      <%= c.text_field :address, :class => "form-control" %>
-    </p>
-  <% end %>
-  <p>
-    <%= f.label :pay_method %></br>
-    <%= f.radio_button :pay_method, "1", :checked => true %>
-    <%= f.label :method_1 %>
-    <%= f.radio_button :pay_method, "2", :checked => false %>
-    <%= f.label :method_2 %>
-    <%= f.radio_button :pay_method, "3", :checked => false %>
-    <%= f.label :method_3 %>
-  </p>
-  <p>
-    <%= f.label :ship_method %></br>
-    <%= f.radio_button :ship_method, "1", :checked => true %>
-    <%= f.label :method_1 %>
-    <%= f.radio_button :ship_method, "2", :checked => false %>
-    <%= f.label :method_2 %>
-    <%= f.radio_button :ship_method, "3", :checked => false %>
-    <%= f.label :method_3 %>
-  </p>
-  <% f.input :status, :input_html => { :class => "form-control"} %>
-  <% f.input :total_price, :input_html => { :class => "form-control"} %>
-
-<hr>
-  <%= f.submit "Submit", :disable_with => 'Submitting...', :class => "btn btn-primary"%>
-<% end %> 
-</div>
+<h1 class="text-center">填寫結帳資訊</h1>
+<div class="container-fluid">
+  <hr>
+  <div class="col-md-offset-4 col-md-4">
+    <%= simple_form_for @order, url: order_path(@order), method: :patch do |f| %>
+      <%= fields_for @contact do |c| %>
+        <h3>收件人</h3>
+        <div class="form-controller">
+          <%= c.label "*姓名" %><br>
+          <%= c.text_field :name, :class => "form-control" %>
+        </div>
+        <div class="form-controller">
+          <%= c.label "*電子郵件" %><br>
+          <%= c.text_field :email, :class => "form-control" %>
+        </div>
+        <div class="form-controller">
+          <%= c.label "*電話" %><br>
+          <%= c.phone_field :cellphone, :class => "form-control" %>
+        </div>
+        <div class="form-controller">
+          <%= c.label "*地址" %><br>
+          <%= c.text_field :address, :class => "form-control" %>
+        </div>
+      <% end %>
+      <br/>
+      <h3>付款方式</h3>
+      <div class="form-controller">
+        <%= f.radio_button :pay_method, "1", :checked => true %>
+        <%= f.label "方式一" %>
+        <%= f.radio_button :pay_method, "2", :checked => false %>
+        <%= f.label "方式二" %>
+        <%= f.radio_button :pay_method, "3", :checked => false %>
+        <%= f.label "方式三" %>
+      </div>
+      <h3>收件方式</h3>
+      <div class="form-controller">
+        <%= f.radio_button :ship_method, "1", :checked => true %>
+        <%= f.label "方式一" %>
+        <%= f.radio_button :ship_method, "2", :checked => false %>
+        <%= f.label "方式二" %>
+        <%= f.radio_button :ship_method, "3", :checked => false %>
+        <%= f.label "方式三" %>
+      </div>
+      <% f.input :status, :input_html => { :class => "form-control"} %>
+      <% f.input :total_price, :input_html => { :class => "form-control"} %>
+      <hr>
+      <div class="form-actions">
+        <%= f.submit "確認", :disable_with => 'Submitting...', :class => "btn btn-primary"%>
+      </div>
+    <% end %> 
+  </div>
+</div>  
