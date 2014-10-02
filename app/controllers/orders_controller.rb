@@ -9,6 +9,8 @@ class OrdersController < ApplicationController
   def show
     @order = Order.find(params[:id])
     @item = OrderInventory.where(order_id: @order.id)
+    @inventories = Inventory.all
+    @contacts = current_user.contacts.all
   end
 
   def create

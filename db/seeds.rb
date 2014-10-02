@@ -53,7 +53,7 @@ for i in 1..5 do
     Order.create([user_id: "#{i}", contact_id: "#{i*3-3+j}", pay_method: "#{j}", ship_method: "#{j}", status: "#{j}", total_price: "999"])
     for k in 1..3 do
       Answer.create([member_question_id: (i-1)*3+j, user_id: "#{i}", content: "這裡是回覆#{k}這裡是回覆這裡是回覆這裡是回覆這裡是回覆"])
-      OrderInventory.create([ order_id: (i-1)*3+j, inventory_id: k*3 ])
+      OrderInventory.create([ order_id: (i-1)*3+j, inventory_id: k*3, amount: k ])
     end
   end
   Cart.create([ user_id: i, receive_address: "這裡是收件地址#{i}這裡是收件地址這裡是收件地址", invoice_address: "這裡是發票地址#{i}這裡是發票地址這裡是發票地址" ])
