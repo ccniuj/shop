@@ -27,7 +27,8 @@ class OrdersController < ApplicationController
 
   def edit
     @order = Order.find(params[:id])
-    @contact = current_user.contacts.first
+    @contact = current_user.contacts.new
+    @contacts = current_user.contacts.all
   end
 
   def update
