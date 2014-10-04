@@ -23,7 +23,14 @@ class OrdersController < ApplicationController
     #   total_price: params[:total_price],
     #   pay_method: 1,
     #   ship_method: 1 )
-    create_contact
+
+    if params[:contact_id].empty?
+      create_contact
+      @@contact_id = current_user.contacts.last.id
+    else
+      update_contact
+      @@contact_id = params[:contact_id]
+    end
 
     @order = current_user.orders.new(order_params)
     @order.save!
@@ -61,8 +68,13 @@ class OrdersController < ApplicationController
     @contact.save!
   end
   
+  def update_contact
+    @contact = current_user.contacts.find(params[:contact_id])
+    @contact.update(contact_params)
+  end
+
   def order_params
-    params[:order][:contact_id] = current_user.contacts.last.id
+    params[:order][:contact_id] = @@contact_id
     params[:order][:status] = 1
     params[:order][:total_price] = params[:total_price]
     params.require(:order).permit(:contact_id, :pay_method, :ship_method, :status, :total_price)

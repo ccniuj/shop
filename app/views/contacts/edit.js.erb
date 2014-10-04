@@ -1,2 +1,5 @@
-$('#contact').html("<%= j (render 'contacts/form') %>")
-$('#contact').slideDown(350)
+$('#contact_id').val("<%= j(@contact.id.to_s) %>")
+$('#name').val("<%= j(@contact.name) %>")
+$('#email').val("<%= j(@contact.email) %>")
+$('#cellphone').val("<%= j(@contact.cellphone) %>")
+$('#address').val("<%= j(@contact.address) %>")

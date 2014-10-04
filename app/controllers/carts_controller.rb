@@ -27,7 +27,7 @@ class CartsController < ApplicationController
         checkout
         @order = current_user.orders.new
         @contacts = current_user.contacts.all
-        @contact = current_user.contacts.new
+        @contact = current_user.contacts.first
         render 'carts/checkout'
       elsif params.has_key? :remove
         remove

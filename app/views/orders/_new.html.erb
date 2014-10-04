@@ -4,18 +4,18 @@
   <div class="col-md-offset-4 col-md-4">
     <%= simple_form_for @order do |f| %>
       <h3>收件人</h3>
-      <h4>選擇收件人</h4>
       <% @contacts.each do |c| %>
         <%= link_to c.name, edit_contact_path(c), remote: true %><br/>
       <% end %>
+      <%= link_to "新增收件人", new_contact_path, remote: true %><br/>
       <div id="contact" style="display: none"></div>
 
-      <h4>新增收件人</h4>
       <%= f.fields_for @contact do |c| %>
-          <%= c.input :name, :label => "姓名", :input_html => { :class => "form-control"} %>
-          <%= c.input :email, :label => "電子郵件", :input_html => { :class => "form-control"} %>
-          <%= c.input :cellphone, :label => "電話", :input_html => { :class => "form-control"} %>
-          <%= c.input :address, :label => "地址", :input_html => { :class => "form-control"} %>
+          <%= hidden_field_tag "contact_id", @contact.id %>
+          <%= c.input :name, :label => "姓名", :input_html => { :class => "form-control", :id => "name"} %>
+          <%= c.input :email, :label => "電子郵件", :input_html => { :class => "form-control", :id => "email"} %>
+          <%= c.input :cellphone, :label => "電話", :input_html => { :class => "form-control", :id => "cellphone"} %>
+          <%= c.input :address, :label => "地址", :input_html => { :class => "form-control", :id => "address"} %>
       <% end %>
       <hr/>
 
