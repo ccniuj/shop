@@ -2,7 +2,7 @@
 <div class="container-fluid">
   <hr>
   <div class="col-md-offset-4 col-md-4">
-    <%= simple_form_for @order, url: order_path(@order), method: :patch do |f| %>
+    <%= simple_form_for @order do |f| %>
       <h3>收件人</h3>
       <h4>選擇收件人</h4>
       <% @contacts.each do |c| %>
@@ -41,7 +41,7 @@
       <% f.input :total_price, :input_html => { :class => "form-control"} %>
       <hr>
       <div class="form-actions">
-        <%= f.submit "確認", :disable_with => 'Submitting...', :class => "btn btn-primary"%>
+        <% f.submit "確認", :disable_with => '正在提交...', :class => "btn btn-primary"%>
       </div>
     <% end %> 
   </div>

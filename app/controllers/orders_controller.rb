@@ -13,30 +13,22 @@ class OrdersController < ApplicationController
     @contacts = current_user.contacts.all
   end
 
+  def new
+  end
+
   def create
-    @order = current_user.orders.build(
-      contact_id: current_user.contacts.first.id,
-      status: 1,
-      total_price: params[:total_price],
-      pay_method: 1,
-      ship_method: 1 )
+    # @order = current_user.orders.build(
+    #   contact_id: current_user.contacts.first.id,
+    #   status: 1,
+    #   total_price: params[:total_price],
+    #   pay_method: 1,
+    #   ship_method: 1 )
+    create_contact
+
+    @order = current_user.orders.new(order_params)
     @order.save!
     add_order_inventory
-    redirect_to edit_order_path(@order), :notice => "成功新增訂單"
-  end
-
-  def edit
-    @order = Order.find(params[:id])
-    @contact = current_user.contacts.new
-    @contacts = current_user.contacts.all
-  end
-
-  def update
-    create_contact
-    # create or update 
-    @order = Order.find(params[:id])
-    @order.update(order_params) 
-    redirect_to order_path(@order), :notice => "成功更新訂單"
+    redirect_to orders_path, :notice => "成功新增訂單"
   end
 
   private 
@@ -71,7 +63,9 @@ class OrdersController < ApplicationController
   
   def order_params
     params[:order][:contact_id] = current_user.contacts.last.id
-    params.require(:order).permit(:contact_id, :pay_method, :ship_method, :status)
+    params[:order][:status] = 1
+    params[:order][:total_price] = params[:total_price]
+    params.require(:order).permit(:contact_id, :pay_method, :ship_method, :status, :total_price)
   end
 
   def contact_params

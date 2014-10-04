@@ -31,7 +31,7 @@ $(document).ready(function(){
     </thead>
     <tbody>
       <% count = 0 %>
-      <% @inventory.each do |i| %>
+      <% @inventories.each do |i| %>
         <tr>
         <% unless @is_checkout %>
           <td> <%= check_box_tag "items[]", i.id, select: true %></td>
@@ -56,6 +56,7 @@ $(document).ready(function(){
     <%= submit_tag "移除", :class => "btn btn-sm btn-default", :name => "remove" %>
   <% else %>
     <p>總金額: <%= @total_price %> </p>
+    <%= render "orders/new" %>
     <%= submit_tag "確認結帳", :class => "btn btn-sm btn-primary", :name => "checkout" %>
     <%= link_to("回到購物車", carts_path, :class => "btn btn-sm btn-default") %>
   <% end %>

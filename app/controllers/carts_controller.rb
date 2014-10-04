@@ -5,12 +5,12 @@ class CartsController < ApplicationController
     @is_checkout = false
     @cart = Cart.where(user_id: current_user.id).take
     @item = CartInventory.where(cart_id: @cart.id)
-    @inventory = []
+    @inventories = []
     @item_amount = []
     @item.each do |z|
       @i = Inventory.joins(:product).where(id: z.inventory_id).take
       @n = z.amount
-      @inventory << @i
+      @inventories << @i
       @item_amount << @n
     end
   end
@@ -25,7 +25,10 @@ class CartsController < ApplicationController
     else
       if params.has_key? :checkout
         checkout
-        render "carts/checkout"
+        @order = current_user.orders.new
+        @contacts = current_user.contacts.all
+        @contact = current_user.contacts.new
+        render 'carts/checkout'
       elsif params.has_key? :remove
         remove
         redirect_to carts_path
@@ -55,14 +58,14 @@ class CartsController < ApplicationController
   def checkout
     @is_checkout = true
 
-    @inventory = []
+    @inventories = []
     @item_amount = []
     @total_price = 0
 
     params[:items].each do |i|
       @t = Inventory.find(i)
       @n = CartInventory.where(cart_id: current_user.id, inventory_id: i).take.amount
-      @inventory << @t
+      @inventories << @t
       @item_amount << @n
       @total_price += @t.product.price * @n
     end
