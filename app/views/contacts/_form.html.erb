@@ -1,0 +1,6 @@
+<%= simple_form_for @contact do |c| %>
+          <%= c.input :name, :label => "姓名", :input_html => { :class => "form-control"} %>
+          <%= c.input :email, :label => "電子郵件", :input_html => { :class => "form-control"} %>
+          <%= c.input :cellphone, :label => "電話", :input_html => { :class => "form-control"} %>
+          <%= c.input :address, :label => "地址", :input_html => { :class => "form-control"} %>
+      <% end %>

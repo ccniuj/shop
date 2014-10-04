@@ -3,14 +3,22 @@
   <hr>
   <div class="col-md-offset-4 col-md-4">
     <%= simple_form_for @order, url: order_path(@order), method: :patch do |f| %>
+      <h3>收件人</h3>
+      <h4>選擇收件人</h4>
+      <% @contacts.each do |c| %>
+        <%= link_to c.name, edit_contact_path(c), remote: true %><br/>
+      <% end %>
+      <div id="contact" style="display: none"></div>
+
+      <h4>新增收件人</h4>
       <%= f.fields_for @contact do |c| %>
-        <h3>收件人</h3>
           <%= c.input :name, :label => "姓名", :input_html => { :class => "form-control"} %>
           <%= c.input :email, :label => "電子郵件", :input_html => { :class => "form-control"} %>
           <%= c.input :cellphone, :label => "電話", :input_html => { :class => "form-control"} %>
           <%= c.input :address, :label => "地址", :input_html => { :class => "form-control"} %>
       <% end %>
-      <br/>
+      <hr/>
+
       <h3>付款方式</h3>
       <div class="form-controller">
         <%= f.radio_button :pay_method, "1", :checked => true %>
