@@ -1,0 +1,15 @@
+<h1 style="text-align:center;">
+  <%= @catalog.name %>
+</h1>
+
+<% @subclasses.each do | subclass | %>
+  <%= link_to catalog_subclass_path( @catalog, subclass, anchor: "hot" ) do %>
+    <h3><%= subclass.name+"熱門商品" %></h3>
+  <% end %>
+  <%= render "common/product_table", :source => subclass.classified_products.has_invt.r_hot.limit(10) %>
+  <br>
+  <%= link_to catalog_subclass_path( @catalog, subclass, anchor: "new" ) do %>
+    <h3><%= subclass.name+"最新商品" %></h3>
+  <% end %>
+  <%= render "common/product_table", :source => subclass.classified_products.has_invt.r_new.limit(10) %>
+<% end %>

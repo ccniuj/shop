@@ -11,18 +11,26 @@ for i in 1..3 do
   for j in 1..3 do
     Subclass.create([ name: "subclass#{j} under catalog#{i}", description: "description of subclass#{j} under catalog#{i}", catalog_id: i])
     for k in 1..10 do
-      total_amount_temp = 0
       total_popularity_temp = 0
       for l in 1..3 do
-        Inventory.create([ product_id: k+j*10+i*30-40, color: "black", size: "XXL", amount: 270, popularity: 393-l-k*3-j*30-i*90])
-        total_amount_temp += 270
+        size_temp = case l
+                      when 1 then "s"
+                      when 2 then "m"
+                      when 3 then "l"
+                    end
+        color_temp = case l
+                      when 1 then "black"
+                      when 2 then "white"
+                      when 3 then "gray"
+                    end
+        Inventory.create([ product_id: k+j*10+i*30-40, color: color_temp, size: size_temp, amount: 270, popularity: 393-l-k*3-j*30-i*90])
         total_popularity_temp += 393-l-k*3-j*30-i*90
         for m in 1..3 do
-          InventoryImage.create([ inventory_id: l+k*3+j*30+i*90-123 ])
+          InventoryImage.create([ inventory_id: l+k*3+j*30+i*90-123, title: "編號#{m+l*10+k*30+j*300+i*900-1230}", description: "關於第#{m+l*10+k*30+j*300+i*900-1230}篇照片的敘述" ])
         end
       end
       Product.create([ name: "product#{k+j*10+i*30-40}", description: "description of product#{k+j*10+i*30-40}", size_note: "my size", attention: "don't put in ur mouth", price: i*1000+j*100+k, total_amout: 810, total_popularity: total_popularity_temp])
-      SubclassProduct.create([ subclass_id: j, product_id: k+j*10+i*30-40 ])
+      SubclassProduct.create([ subclass_id: j+i*3-3, product_id: k+j*10+i*30-40 ])
     end
   end
 end

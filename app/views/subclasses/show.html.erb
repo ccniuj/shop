@@ -1,0 +1,9 @@
+<h1 style="text-align:center;"><%= @subclass.name %></h1>
+
+<h3 id="hot">熱門商品</h3>
+<%= render "common/product_table", :source => @hot_classified_products %>
+
+<br>
+
+<h3 id="new">最新商品</h3>
+<%= render "common/product_table", :source => @new_classified_products %>
