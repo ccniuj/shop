@@ -15,7 +15,23 @@ class CartsController < ApplicationController
     end
   end
 
-  def show
+  def add
+    @cart_id = Cart.where(user_id: current_user.id).first.id
+    @item_num_sum = 0
+    @item_amount_sum = 0
+    params[:inventory].each do | key, val |
+      unless val.to_i == 0
+        CartInventory.create({cart_id: @cart_id, inventory_id: key, amount: val})
+        @item_num_sum += 1
+        @item_amount_sum += val.to_i
+      end
+    end
+    if @item_num_sum > 0
+      flash[:notice] = "已成功新增 #{@item_num_sum} 項商品，共 #{@item_amount_sum} 件"
+    else
+      flash[:alert] = "你並未新增任何商品至購物車"
+    end
+    redirect_to product_path(params[:product_id])
   end
 
   def operation

@@ -32,11 +32,8 @@
       <ul class="nav navbar-nav navbar-left">
         <% if !current_user || (!current_user.has_any_role? :admin, :service, :shopper, :analyst) %>
           <% Catalog.all.each do | catalog | %> <!-- 印出分類 -->
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <%= catalog.name %>  
-                <b class="caret"></b>
-              </a>
+            <li class="drop-when-hover dropdown">
+              <%= link_to( catalog.name, catalog_path(catalog) ) %>
               <ul class="dropdown-menu">
                 <% catalog.subclasses.all.each do | subclass | %> <!-- 印出子類別 -->
                   <li>

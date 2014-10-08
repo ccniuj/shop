@@ -14,3 +14,7 @@
  *= require_self
  */
 @import "bootstrap";
+
+ul.nav li.drop-when-hover:hover > ul.dropdown-menu {
+    display: block;    
+}

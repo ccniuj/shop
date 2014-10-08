@@ -1,0 +1,97 @@
+<h1 style="text-align:center;"><%= @product.name %></h1>
+
+<br>
+
+<table class="table table-hover">
+	<thead> 
+	  <tr>
+	    <td> 產品簡介 </td>
+      <td> 尺寸說明 </td>
+	    <td> 注意事項 </td>
+	    <td> 價錢 </td>
+	  </tr>
+  </thead>
+	<tbody>
+	  <tr>
+	      <td><%= @product.description %></td>
+	      <td><%= @product.size_note %></td>
+		    <td><%= @product.attention %></td>
+		    <td><%= @product.price %></td>
+	  </tr>
+	</tbody>
+</table>
+
+<h3 style="text-align:center;">庫存表</h3>
+<table class="table table-hover">
+	<thead> 
+	  <tr style="text-align:center;">
+	    <td> 顏色 </td>
+	  	<% @all_sizes.each do | size | %>
+        <td><%= size.upcase %></td>
+	  	<% end %>
+	  </tr>
+  </thead>
+	<tbody>
+	  <% @product_colors.each do | color_inventory | %>
+	    <tr style="text-align:center;">
+		      <td><%= color_inventory %></td>
+		      <% @all_sizes.each do | size | %>
+            <td>
+              <%= check_num(@inventories,color_inventory,size) ? check_num(@inventories,color_inventory,size).amount : 0 %>
+            </td>
+		      <% end %>
+	    </tr>
+	  <% end %>
+	</tbody>
+</table>
+
+<br>
+
+<div style="width: 17%; margin:0 auto;">
+	<% @inventories.each do | inventory | %>
+	  <% inventory.inventory_images.each do | images | %>
+	    <h5>照片標題：<%= images.title %></h5>
+	    <p>照片說明：<%= images.description %></p>
+	  <% end %>
+	<% end %>
+</div>
+<hr>
+<h3 style="text-align:center;">加入購物車</h3>
+<%= form_tag add_cart_path(current_user.carts.first.id), :method => "post" do %>
+	<table class="table table-hover">
+		<thead> 
+		  <tr style="text-align:center;">
+		    <td> 顏色 </td>
+		  	<% @all_sizes.each do | size | %>
+	        <td><%= size.upcase %></td>
+		  	<% end %>
+		  </tr>
+	  </thead>
+		<tbody>
+		<% @product_colors.each do | color_inventory | %>
+			  <tr style="text-align:center;">
+		      <td style="width:100px"><%= color_inventory %></td>
+		      <% @all_sizes.each do | size | %>
+		        <td style="width:100px">
+		        	<% inventory = check_num(@inventories,color_inventory,size) %>
+		        	<% invt_num = inventory ? check_num(@inventories,color_inventory,size).amount : 0 %>
+		        	<% invt_id = inventory ? check_num(@inventories,color_inventory,size).id : nil %>
+		        	<% select_num = [] %>
+		        	<% if invt_num > 20 %>
+		        	  <% (0..20).each { |num| select_num << [num.to_s,num] } %>
+		        	  <%= select_tag("inventory[#{invt_id}]", options_for_select(select_num)) %>
+		          <% elsif invt_num < 20 && inventory %>
+		            <% (0..inventory.amount).each { |num| select_num << [num.to_s,num] } %>
+		            <%= select_tag("inventory[#{invt_id}]", options_for_select(select_num)) %>
+		          <% else %>
+		            <%= 0 %>
+		        	<% end %>
+		        </td>
+		      <% end %>
+			  </tr>
+	  <% end %>
+		<%= hidden_field_tag "product_id", @product_id %>
+	  </tbody>
+	</table>
+	<%= submit_tag "加入購物車", :class => "btn btn-sm btn-default" %>
+<% end %>

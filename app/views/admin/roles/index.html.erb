@@ -18,6 +18,7 @@
             <% @roles.each do | role | %>
               <% if user.has_role? role.name.to_sym %>
                 <%= check_box_tag( "roles[]", role.name, true ) %> <!-- , disabled: true -->
+                <%= hidden_field_tag( "old_roles[]", role.nameg ) %>
               <% else %>
                 <%= check_box_tag( "roles[]", role.name, false ) %>
               <% end %>
@@ -37,7 +38,15 @@
         <% end %>
         </td>
         <td>
-          <%= button_to "刪除", admin_user_path( user ), data: { confirm: "你確定要刪除這位使用者嗎？" }, method: :delete, :class => "btn btn-sm btn-default" %>
+        <%= form_tag admin_user_path( user ), method: :delete do %>
+          <% @roles.each do | role | %>
+            <% if user.has_role? role.name.to_sym %>
+              <%= hidden_field_tag( "old_roles[]", role.name ) %>
+            <% end %>
+          <% end %>
+          <%= submit_tag "刪除", :class => "btn btn-sm btn-default", data: { confirm: "你確定要刪除這位使用者嗎？" } %>
+          <%#= button_to "刪除", admin_user_path( user ), data: { confirm: "你確定要刪除這位使用者嗎？" }, method: :delete, :class => "btn btn-sm btn-default" %>
+        <% end %>
         </td>
       </tr>
     <% end %>
