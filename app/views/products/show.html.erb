@@ -57,41 +57,12 @@
 </div>
 <hr>
 <h3 style="text-align:center;">加入購物車</h3>
-<%= form_tag add_cart_path(current_user.carts.first.id), :method => "post" do %>
-	<table class="table table-hover">
-		<thead> 
-		  <tr style="text-align:center;">
-		    <td> 顏色 </td>
-		  	<% @all_sizes.each do | size | %>
-	        <td><%= size.upcase %></td>
-		  	<% end %>
-		  </tr>
-	  </thead>
-		<tbody>
-		<% @product_colors.each do | color_inventory | %>
-			  <tr style="text-align:center;">
-		      <td style="width:100px"><%= color_inventory %></td>
-		      <% @all_sizes.each do | size | %>
-		        <td style="width:100px">
-		        	<% inventory = check_num(@inventories,color_inventory,size) %>
-		        	<% invt_num = inventory ? check_num(@inventories,color_inventory,size).amount : 0 %>
-		        	<% invt_id = inventory ? check_num(@inventories,color_inventory,size).id : nil %>
-		        	<% select_num = [] %>
-		        	<% if invt_num > 20 %>
-		        	  <% (0..20).each { |num| select_num << [num.to_s,num] } %>
-		        	  <%= select_tag("inventory[#{invt_id}]", options_for_select(select_num)) %>
-		          <% elsif invt_num < 20 && inventory %>
-		            <% (0..inventory.amount).each { |num| select_num << [num.to_s,num] } %>
-		            <%= select_tag("inventory[#{invt_id}]", options_for_select(select_num)) %>
-		          <% else %>
-		            <%= 0 %>
-		        	<% end %>
-		        </td>
-		      <% end %>
-			  </tr>
-	  <% end %>
-		<%= hidden_field_tag "product_id", @product_id %>
-	  </tbody>
-	</table>
-	<%= submit_tag "加入購物車", :class => "btn btn-sm btn-default" %>
+<% if current_user %>
+	<%= form_tag add_cart_path(current_user.carts.first.id), :method => "post" do %>
+    <%= render "add" %>
+		<%= submit_tag "加入購物車", :class => "btn btn-sm btn-default" %>
+	<% end %>
+<% else %>
+  <%= render "add" %>
+  <%= link_to "加入購物車", new_user_session_path, :class => "btn btn-sm btn-default" %>
 <% end %>
