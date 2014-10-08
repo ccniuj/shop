@@ -20,10 +20,18 @@ class CartsController < ApplicationController
     @item_num_sum = 0
     @item_amount_sum = 0
     params[:inventory].each do | key, val |
+      @cart_invt = CartInventory.where(cart_id: @cart_id, inventory_id: key).first
       unless val.to_i == 0
-        CartInventory.create({cart_id: @cart_id, inventory_id: key, amount: val})
-        @item_num_sum += 1
-        @item_amount_sum += val.to_i
+        if @cart_invt
+          new_val = val.to_i + @cart_invt.amount
+          CartInventory.update(@cart_invt.id,{cart_id: @cart_id, inventory_id: key, amount: new_val})
+          @item_num_sum += 1
+          @item_amount_sum += val.to_i
+        else
+          CartInventory.create({cart_id: @cart_id, inventory_id: key, amount: val.to_i})
+          @item_num_sum += 1
+          @item_amount_sum += val.to_i
+        end
       end
     end
     if @item_num_sum > 0

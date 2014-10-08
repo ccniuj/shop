@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     member do
       post :operation
       post :remove
-      post :add
+      put :add
     end
   end
   resources :products
