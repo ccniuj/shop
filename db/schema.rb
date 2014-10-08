@@ -56,10 +56,10 @@ ActiveRecord::Schema.define(version: 20141002070143) do
 
   create_table "contacts", force: true do |t|
     t.integer  "user_id"
-    t.string  "name"
-    t.string  "cellphone"
-    t.string "address"
-    t.string "email"
+    t.string   "name"
+    t.string   "cellphone"
+    t.string   "address"
+    t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

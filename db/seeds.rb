@@ -7,12 +7,13 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 for i in 1..3 do
-  Catalog.create([ name: "目錄#{i}目錄#{i}目錄#{i}目錄#{i}目錄#{i}", description: "這是目錄說明#{i}這是目錄說明#{i}這是目錄說明#{i}這是目錄說明#{i}這是目錄說明#{i}"])
+  Catalog.create([ name: "目錄#{i}", description: "這是目錄說明#{i}"])
   for j in 1..3 do
-    Subclass.create([ name: "類別#{j}位於目錄#{i}類別#{j}位於目錄#{i}類別#{j}位於目錄#{i}", description: "這是類別#{j}位於目錄#{i}的說明這是類別#{j}位於目錄#{i}的說明這是類別#{j}位於目錄#{i}的說明", catalog_id: i])
+    Subclass.create([ name: "類別#{j}位於目錄#{i}", description: "這是類別#{j}位於目錄#{i}的說明", catalog_id: i])
     for k in 1..5 do
-      total_amount_temp = 0
       total_popularity_temp = 0
+      Product.create([ name: "商品#{k+j*5+i*15-20}", description: "這是商品說明#{k+j*5+i*15-20}", size_note: "my size", attention: "這是商品說明", price: i*1000+j*100+k, total_amout: 810, total_popularity: total_popularity_temp])
+      SubclassProduct.create([ subclass_id: j+i*3-3, product_id: k+j*5+i*15-20 ])
       for l in 1..3 do
         size_temp = case l
                       when 1 then "s"
@@ -24,14 +25,12 @@ for i in 1..3 do
                       when 2 then "white"
                       when 3 then "gray"
                     end
-        Inventory.create([ product_id: k+j*10+i*30-40, color: color_temp, size: size_temp, amount: 270, popularity: 393-l-k*3-j*30-i*90])
-        total_popularity_temp += 393-l-k*3-j*30-i*90
+        Inventory.create([ product_id: k+j*5+i*15-20, color: color_temp, size: size_temp, amount: 270, popularity: 198-l-k*3-j*15-i*45])
+        total_popularity_temp += 198-l-k*3-j*30-i*90
         for m in 1..3 do
-          InventoryImage.create([ inventory_id: l+k*3+j*30+i*90-123, title: "編號#{m+l*10+k*30+j*300+i*900-1230}", description: "關於第#{m+l*10+k*30+j*300+i*900-1230}篇照片的敘述" ])
+          InventoryImage.create([ inventory_id: l+k*3+j*15+i*45-63, title: "編號#{m+l*3+k*15+j*45+i*135-198}", description: "關於第#{m+l*3+k*15+j*45+i*135-198}篇照片的敘述" ])
         end
       end
-      Product.create([ name: "商品#{k+j*10+i*30-40}商品商品商品商品商品商品", description: "這是商品說明#{k+j*10+i*30-40}這是商品說明這是商品說明這是商品說明", size_note: "my size", attention: "這是商品說明這是商品說明這是商品說明這是商品說明", price: i*1000+j*100+k, total_amout: 810, total_popularity: total_popularity_temp])
-      SubclassProduct.create([ subclass_id: j+i*3-3, product_id: k+j*10+i*30-40 ])
     end
   end
 end
@@ -55,8 +54,11 @@ User.find(4).add_role "analyst"
 for i in 1..5 do
   User.create([ email: "user#{i}@gmail.com", password: '11111111', password_confirmation: '11111111' ])
   Faq.create([question: "常見問題#{i}常見問題常見問題常見問題常見問題", answer: "答#{i}答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答答"])
+  Cart.create([ user_id: i, receive_address: "這裡是收件地址#{i}這裡是收件地址這裡是收件地址", invoice_address: "這裡是發票地址#{i}這裡是發票地址這裡是發票地址" ])
+  for l in 1..3 do
+    CartInventory.create([ cart_id: "#{i}", inventory_id: l*5, amount: l ])
+  end
   for j in 1..3 do
-    Contact.create([user_id: i, name: "路人#{j}使用者#{i}", cellphone: "0912-345678", address: "這裡是地址#{j}這裡是地址#{j}這裡是地址#{j}這裡是地址#{j}這裡是地址#{j}這裡是地址#{j}", email: "receiver#{i*3-3+j}@gmail.com"])
     Coupon.create([user_id: i , expired_at: "20150101", title: "這裡是標題這裡是標題這裡是標題", content: "這裡是內容這裡是內容這裡是內容這裡是內容這裡是內容", amount: "888"])
     MemberQuestion.create([user_id: "#{i}", title: "會員提問#{j}會員提問會員提問會員提問會員提問", content: "這裡是內容#{j}這裡是內容#{j}這裡是內容#{j}這裡是內容#{j}這裡是內容#{j}", status: j ])
     Order.create([user_id: "#{i}", contact_id: "#{i*3-3+j}", pay_method: "#{j}", ship_method: "#{j}", status: "#{j}", total_price: "999"])
@@ -64,10 +66,7 @@ for i in 1..5 do
       Answer.create([member_question_id: (i-1)*3+j, user_id: "#{i}", content: "這裡是回覆#{k}這裡是回覆這裡是回覆這裡是回覆這裡是回覆"])
       OrderInventory.create([ order_id: (i-1)*3+j, inventory_id: k*3, amount: k ])
     end
-  end
-  Cart.create([ user_id: i, receive_address: "這裡是收件地址#{i}這裡是收件地址這裡是收件地址", invoice_address: "這裡是發票地址#{i}這裡是發票地址這裡是發票地址" ])
-  for l in 1..3 do
-    CartInventory.create([ cart_id: "#{i}", inventory_id: l*5, amount: l ])
+    Contact.create([user_id: i, name: "路人#{j}使用者#{i}", cellphone: "0912-345678", address: "這裡是地址#{j}這裡是地址#{j}這裡是地址#{j}這裡是地址#{j}這裡是地址#{j}這裡是地址#{j}", email: "receiver#{i*3-3+j}@gmail.com"])
   end
 end
 
