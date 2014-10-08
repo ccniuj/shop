@@ -59,10 +59,10 @@
 <h3 style="text-align:center;">加入購物車</h3>
 <% if current_user %>
 	<%= form_tag add_cart_path(current_user.carts.first.id), :method => "post" do %>
-    <%= render "add_to_cart" %>
+    <%= render "add" %>
 		<%= submit_tag "加入購物車", :class => "btn btn-sm btn-default" %>
 	<% end %>
 <% else %>
-  <%= render "add_to_cart" %>
+  <%= render "add" %>
   <%= link_to "加入購物車", new_user_session_path, :class => "btn btn-sm btn-default" %>
 <% end %>
