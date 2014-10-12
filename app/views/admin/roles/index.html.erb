@@ -18,7 +18,7 @@
             <% @roles.each do | role | %>
               <% if user.has_role? role.name.to_sym %>
                 <%= check_box_tag( "roles[]", role.name, true ) %> <!-- , disabled: true -->
-                <%= hidden_field_tag( "old_roles[]", role.nameg ) %>
+                <%= hidden_field_tag( "old_roles[]", role.name ) %>
               <% else %>
                 <%= check_box_tag( "roles[]", role.name, false ) %>
               <% end %>

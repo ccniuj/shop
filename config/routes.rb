@@ -9,14 +9,15 @@ Rails.application.routes.draw do
     resources :users do
       post :change
     end
-    resources :catalogs do
-      resources :subclasses
-    end
     resources :faqs
     resources :bugs
     resources :member_questions do
       resources :answers
     end
+    resources :catalogs do
+      resources :subclasses
+    end
+    resources :products
   end
 
   resources :catalogs do

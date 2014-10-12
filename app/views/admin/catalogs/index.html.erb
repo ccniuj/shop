@@ -1,0 +1,40 @@
+<h1 style="text-align:center;">分類管理</h1>
+<%= link_to("新增分類", new_admin_catalog_path , :class => "btn btn-primary pull-right" ) %>
+<table class="table table-hover">
+	<thead> 
+	  <tr style="text-align:center;">
+	    <td> # </td>
+	    <td> 名稱 </td>
+	    <td> 說明 </td>
+	    <td> 類別數 </td>
+	    <td> 產品數 </td>
+	  </tr>
+	</thead>
+  <tbody>
+  	  <% @catalogs.each do | catalog | %>
+				<tr style="text-align:center;">
+				  <td><%= catalog.id %></td>
+				  <td><%= link_to catalog.name, edit_admin_catalog_path(catalog) %></td>
+				  <td><%= catalog.description %></td>
+				  <td><%= catalog.subclasses.count %></td>
+				  <td>
+				  	<% product_amount = 0 %>
+				  	<% catalog.subclasses.each do |subclass| %>
+				  	  <% product_amount += subclass.classified_products.count %>
+				  	<% end %>
+				  	<%= product_amount %>
+				  </td>
+				  <td>
+				  	<%= link_to("編輯", 
+				  	            edit_admin_catalog_path(catalog), 
+				  	            :class => "btn btn-sm btn-default")%>
+				  	<%= link_to("刪除", 
+                        admin_catalog_path(catalog), 
+                        :class => "btn btn-sm btn-default", 
+                        :method=>:delete,
+                        data: { confirm: "你確定要刪除「#{catalog.name}」，和旗下全部的類別？" } )%>
+				  </td>
+				</tr>
+      <% end %>
+  </tbody>
+</table>

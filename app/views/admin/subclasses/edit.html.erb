@@ -1,0 +1,56 @@
+<h1 style="text-align:center;"><%= @subclass.name %></h1>
+<%= link_to '返回', edit_admin_catalog_path(@catalog), :class => "btn btn-warning" %>
+<hr>
+<%= form_for @subclass, url: admin_catalog_subclass_path(@catalog,@subclass) do |subclass| %>
+  <div class="form-controller">
+	  <%= subclass.label "目錄名稱" %><br>
+	  <%= subclass.text_field :name, class: "form-control" %>
+	</div>
+	<div class="form-controller">
+	  <%= subclass.label "目錄說明" %><br>
+	  <%= subclass.text_area :description, class: "form-control" %>
+	</div>
+	<br>
+  <%= subclass.submit "儲存變更", 
+                     :disable_with => '處理中...', 
+                     :class => "btn btn-primary pull-right" %>
+<% end %>
+<br>
+<h1 style="text-align:center;"><%= @subclass.name %>的產品</h1>
+<%= link_to("新增產品", # need to insert add product to SubclassProduct url (path)
+	          edit_admin_catalog_subclass_path(@catalog,@subclass),
+            :class => "btn btn-primary pull-right" ) %>
+<table class="table table-hover">
+	<thead> 
+	  <tr style="text-align:center;">
+	    <td> # </td>
+	    <td> 名稱 </td>
+	    <td> 價錢 </td>
+	    <td> 存貨類別數 </td>
+	    <td> 存貨總量 </td>
+	    <td> 銷售總量 </td>
+	  </tr>
+	</thead>
+  <tbody>
+  	  <% @subclass.classified_products.each do | product | %>
+				<tr style="text-align:center;">
+				  <td><%= product.id %></td>
+				  <td><%= link_to product.name, 
+				                  edit_admin_product_path(product) %></td>
+				  <td><%= product.description %></td>
+				  <td><%= product.inventories.count %></td>
+				  <td><%= product.total_amout %></td>
+				  <td><%= product.total_popularity %></td>
+				  <td>
+				  	<%= link_to("編輯", 
+				  	            edit_admin_product_path(product), 
+				  	            :class => "btn btn-sm btn-default")%>
+				  	<%= link_to("刪除", # need to insert remove product from SubclassProduct url (path)
+				  		          edit_admin_catalog_subclass_path(@catalog,@subclass),
+                        :class => "btn btn-sm btn-default", :method=>:delete,
+                        data:{confirm: "你確定要把 #{product.name} 從 #{@subclass.name} 中移除？"}) %>
+				  </td>
+				</tr>
+      <% end %>
+  </tbody>
+</table>

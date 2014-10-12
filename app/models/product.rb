@@ -1,6 +1,6 @@
 class Product < ActiveRecord::Base
-  has_many :inventories
-  has_many :subclass_products
+  has_many :inventories, dependent: :destroy
+  has_many :subclass_products, dependent: :destroy
   has_many :belonged_subclasses, :through => :subclass_products, :source => :subclass
 
   scope :has_invt, -> { where("total_amout > total_popularity") }

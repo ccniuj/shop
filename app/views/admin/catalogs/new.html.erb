@@ -1,0 +1,17 @@
+<h1 style="text-align:center;">新增目錄</h1>
+<%= link_to '返回', admin_catalogs_path, :class => "btn btn-warning" %>
+<hr>
+<%= form_for @catalog, url: admin_catalogs_path do |catalog| %>
+  <div class="form-controller">
+	  <%= catalog.label "目錄名稱" %><br>
+	  <%= catalog.text_field :name, class: "form-control" %>
+	</div>
+	<div class="form-controller">
+	  <%= catalog.label "目錄說明" %><br>
+	  <%= catalog.text_area :description, class: "form-control" %>
+	</div>
+	<br>
+  <%= catalog.submit "儲存變更", 
+                     :disable_with => '處理中...', 
+                     :class => "btn btn-primary pull-right" %>
+<% end %>
