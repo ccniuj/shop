@@ -1,0 +1,17 @@
+<h1 style="text-align:center;">新增類別於<%= @catalog.name %></h1>
+<%= link_to '返回', edit_admin_catalog_path(@catalog), :class => "btn btn-warning" %>
+<hr>
+<%= form_for @subclass, url: admin_catalog_subclasses_path(@catalog) do |subclass| %>
+  <div class="form-controller">
+	  <%= subclass.label "目錄名稱" %><br>
+	  <%= subclass.text_field :name, class: "form-control" %>
+	</div>
+	<div class="form-controller">
+	  <%= subclass.label "目錄說明" %><br>
+	  <%= subclass.text_area :description, class: "form-control" %>
+	</div>
+	<br>
+  <%= subclass.submit "儲存變更", 
+                     :disable_with => '處理中...', 
+                     :class => "btn btn-primary pull-right" %>
+<% end %>
