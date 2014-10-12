@@ -17,7 +17,11 @@ Rails.application.routes.draw do
     resources :catalogs do
       resources :subclasses
     end
-    resources :products
+    resources :products do
+      resources :inventories do
+        resources :inventory_images
+      end
+    end
   end
 
   resources :catalogs do

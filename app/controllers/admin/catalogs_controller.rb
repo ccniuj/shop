@@ -20,7 +20,7 @@ class Admin::CatalogsController < ApplicationController
       redirect_to new_admin_catalog_subclass_path(@catalog), notice: "目錄新增成功，請新增目錄的類別"
       # redirect_to @catalog, notice: "目錄新增成功，請新增目錄的類別"
   	else
-      render :new, alert: "目錄新增失敗"
+      render :new, alert: "目錄新增失敗，必須輸入名稱與說明"
   	end
   end
 
@@ -28,7 +28,8 @@ class Admin::CatalogsController < ApplicationController
   	if @catalog.update(catalog_params)
   		redirect_to edit_admin_catalog_path(@catalog), notice: "目錄變更完成"
     else
-    	render :edit, alert: "目錄變更失敗"
+      # using render here will cause problem, need to fix later
+    	redirect_to edit_admin_catalog_path(@catalog), alert: "目錄變更失敗，必須輸入名稱與說明"
     end
   end
 
