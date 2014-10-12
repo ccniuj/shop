@@ -18,7 +18,8 @@ class Admin::SubclassesController < ApplicationController
     	# should redirect_to add product to SubclassProduct page
     	redirect_to edit_admin_catalog_path(@catalog), notice: "類別新增完成"
     else
-      render :new, alert: "類別新增失敗，必須輸入名稱與說明"
+      flash[:alert] = "類別新增失敗，必須輸入名稱與說明"
+      render :new
     end
   end
 

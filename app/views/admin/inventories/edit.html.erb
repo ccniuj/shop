@@ -1,0 +1,57 @@
+<h1 style="text-align:center;"><%= @inventory.color %>-<%= @inventory.size %></h1>
+<%= link_to '返回產品頁面',
+            edit_admin_product_path(@product), 
+            :class => "btn btn-warning" %>
+<hr>
+<%= form_for @inventory, url: admin_product_inventory_path(@product,@inventory) do |inventory| %>
+  <div class="form-controller">
+	  <%= inventory.label "存貨顏色" %><br>
+	  <%= inventory.text_field :color, class: "form-control" %>
+	</div>
+  <div class="form-controller">
+	  <%= inventory.label "存貨尺寸" %><br>
+	  <%= inventory.text_field :size, class: "form-control" %>
+	</div>
+	<div class="form-controller">
+	  <%= inventory.label "存貨數量" %><br>
+	  <%= inventory.number_field :amount, class: "form-control" %>
+	</div>
+	<br>
+  <%= inventory.submit "儲存變更", 
+                     :disable_with => '處理中...', 
+                     :class => "btn btn-primary pull-right" %>
+<% end %>
+<br>
+<h1 style="text-align:center;">存貨<%= @inventory.color %>-<%= @inventory.size %>圖片</h1>
+<%= link_to("新增存貨圖片", 
+            new_admin_product_inventory_inventory_image_path(@product,@inventory), 
+            :class => "btn btn-primary pull-right" ) %>
+<table class="table table-hover">
+	<thead> 
+	  <tr style="text-align:center;">
+	    <td> # </td>
+	    <td> 名稱 </td>
+	    <td> 說明 </td>
+	  </tr>
+	</thead>
+  <tbody>
+  	  <% @inventory_images.each do | image | %>
+				<tr style="text-align:center;">
+				  <td><%= image.id %></td>
+				  <td><%= link_to image.title, 
+				                  edit_admin_product_inventory_inventory_image_path(@product,@inventory,image) %></td>
+				  <td><%= image.description %></td>
+				  <td>
+				  	<%= link_to("編輯", 
+				  	            edit_admin_product_inventory_inventory_image_path(@product,@inventory,image), 
+				  	            :class => "btn btn-sm btn-default")%>
+				  	<%= link_to("刪除", 
+                        admin_product_inventory_inventory_image_path(@product,@inventory,image),
+                        :class => "btn btn-sm btn-default", 
+                        :method=>:delete,
+                        data: { confirm: "你確定要刪除「#{image.title}」？" } )%>
+				  </td>
+				</tr>
+      <% end %>
+  </tbody>
+</table>

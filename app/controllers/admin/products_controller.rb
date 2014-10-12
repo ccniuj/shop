@@ -1,4 +1,6 @@
 class Admin::ProductsController < ApplicationController
+  before_action :find_product, only: [:edit, :update, :destroy]
+
   def index
   	@products = Product.all
   end
@@ -8,7 +10,6 @@ class Admin::ProductsController < ApplicationController
   end
 
   def edit
-  	@product = Product.find(params[:id])
   	@inventories = @product.inventories
   end
 
@@ -16,16 +17,14 @@ class Admin::ProductsController < ApplicationController
   	@product = Product.new(product_params)
 
   	if @product.save
-  		# should redirect_to new_admin_product_inventory(@product) to put on related inventories
-  		redirect_to admin_products_path, notice: "產品新增成功"
+  		redirect_to new_admin_product_inventory_path(@product), notice: "產品新增成功"
   	else
-      render :new, alert: "產品新增失敗，名稱、說明、尺寸說明、注意事項、價錢不得為空，且價錢須為阿拉伯數字"
+  		flash[:alert] = "產品新增失敗，名稱、說明、尺寸說明、注意事項、價錢不得為空，且價錢須為阿拉伯數字"
+      render :new
   	end
   end
 
   def update
-  	@product = Product.find(params[:id])
-
   	if @product.update(product_params)
   		redirect_to edit_admin_product_path(@product), notice: "產品變更成功"
   	else
@@ -35,7 +34,6 @@ class Admin::ProductsController < ApplicationController
   end
 
   def destroy
-  	@product = Product.find(params[:id])
   	@product.destroy
   	redirect_to admin_products_path, notice: "成功刪除產品"
   end
@@ -44,5 +42,9 @@ class Admin::ProductsController < ApplicationController
 
   def product_params
   	params.require(:product).permit(:name, :description, :size_note, :attention, :price)
+  end
+
+  def find_product
+  	@product = Product.find(params[:id])
   end
 end

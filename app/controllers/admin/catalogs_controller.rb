@@ -18,9 +18,9 @@ class Admin::CatalogsController < ApplicationController
 
   	if @catalog.save
       redirect_to new_admin_catalog_subclass_path(@catalog), notice: "目錄新增成功，請新增目錄的類別"
-      # redirect_to @catalog, notice: "目錄新增成功，請新增目錄的類別"
   	else
-      render :new, alert: "目錄新增失敗，必須輸入名稱與說明"
+      flash[:alert] = "目錄新增失敗，必須輸入名稱與說明"
+      render :new
   	end
   end
 

@@ -1,0 +1,23 @@
+<h1 style="text-align:center;">新增存貨</h1>
+<%= link_to '返回產品頁面',
+            edit_admin_product_path(@product), 
+            :class => "btn btn-warning" %>
+<hr>
+<%= form_for @inventory, url: admin_product_inventories_path(@product) do |inventory| %>
+  <div class="form-controller">
+	  <%= inventory.label "存貨顏色" %><br>
+	  <%= inventory.text_field :color, class: "form-control" %>
+	</div>
+  <div class="form-controller">
+	  <%= inventory.label "存貨尺寸" %><br>
+	  <%= inventory.text_field :size, class: "form-control" %>
+	</div>
+	<div class="form-controller">
+	  <%= inventory.label "存貨數量" %><br>
+	  <%= inventory.number_field :amount, class: "form-control" %>
+	</div>
+	<br>
+  <%= inventory.submit "儲存變更", 
+                     :disable_with => '處理中...', 
+                     :class => "btn btn-primary pull-right" %>
+<% end %>
