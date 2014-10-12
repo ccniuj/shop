@@ -1,0 +1,29 @@
+<h1 style="text-align:center;">新增產品</h1>
+<%= link_to '返回存貨管理', admin_products_path, :class => "btn btn-warning" %>
+<hr>
+<%= form_for @product, url: admin_products_path do |product| %>
+  <div class="form-controller">
+	  <%= product.label "產品名稱" %><br>
+	  <%= product.text_field :name, class: "form-control" %>
+	</div>
+	<div class="form-controller">
+	  <%= product.label "產品說明" %><br>
+	  <%= product.text_area :description, class: "form-control" %>
+	</div>
+	<div class="form-controller">
+	  <%= product.label "產品尺寸說明" %><br>
+	  <%= product.text_area :size_note, class: "form-control" %>
+	</div>
+	<div class="form-controller">
+	  <%= product.label "產品注意事項" %><br>
+	  <%= product.text_area :attention, class: "form-control" %>
+	</div>
+	<div class="form-controller">
+	  <%= product.label "產品售價" %><br>
+	  <%= product.number_field :price, class: "form-control" %>
+	</div>
+	<br>
+  <%= product.submit "儲存變更", 
+                     :disable_with => '處理中...', 
+                     :class => "btn btn-primary pull-right" %>
+<% end %>

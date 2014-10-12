@@ -1,0 +1,19 @@
+<h1 style="text-align:center;">新增存貨照片</h1>
+<%= link_to '返回存貨頁面', 
+            edit_admin_product_inventory_path(@product,@inventory), 
+            :class => "btn btn-warning" %>
+<hr>
+<%= form_for @inventory_image, url: admin_product_inventory_inventory_images_path(@product,@inventory) do |image| %>
+  <div class="form-controller">
+	  <%= image.label "存貨照片標題" %><br>
+	  <%= image.text_field :title, class: "form-control" %>
+	</div>
+	<div class="form-controller">
+	  <%= image.label "存貨照片說明" %><br>
+	  <%= image.text_area :description, class: "form-control" %>
+	</div>
+	<br>
+  <%= image.submit "儲存變更", 
+                   :disable_with => '處理中...', 
+                   :class => "btn btn-primary pull-right" %>
+<% end %>

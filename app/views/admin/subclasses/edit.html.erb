@@ -32,12 +32,12 @@
 	  </tr>
 	</thead>
   <tbody>
-  	  <% @subclass.classified_products.each do | product | %>
+  	  <% @products.each do | product | %>
 				<tr style="text-align:center;">
 				  <td><%= product.id %></td>
 				  <td><%= link_to product.name, 
 				                  edit_admin_product_path(product) %></td>
-				  <td><%= product.description %></td>
+				  <td><%= product.price %></td>
 				  <td><%= product.inventories.count %></td>
 				  <td><%= product.total_amout %></td>
 				  <td><%= product.total_popularity %></td>

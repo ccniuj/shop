@@ -1,0 +1,66 @@
+<h1 style="text-align:center;"><%= @product.name %></h1>
+<%= link_to '返回存貨管理', admin_products_path, :class => "btn btn-warning" %>
+<hr>
+<%= form_for @product, url: admin_product_path(@product) do |product| %>
+  <div class="form-controller">
+	  <%= product.label "產品名稱" %><br>
+	  <%= product.text_field :name, class: "form-control" %>
+	</div>
+	<div class="form-controller">
+	  <%= product.label "產品說明" %><br>
+	  <%= product.text_area :description, class: "form-control" %>
+	</div>
+	<div class="form-controller">
+	  <%= product.label "產品尺寸說明" %><br>
+	  <%= product.text_area :size_note, class: "form-control" %>
+	</div>
+	<div class="form-controller">
+	  <%= product.label "產品注意事項" %><br>
+	  <%= product.text_area :attention, class: "form-control" %>
+	</div>
+	<div class="form-controller">
+	  <%= product.label "產品售價" %><br>
+	  <%= product.number_field :price, class: "form-control" %>
+	</div>
+	<br>
+	<%= hidden_field_tag "inventories", @inventories %>
+  <%= product.submit "儲存變更", 
+                     :disable_with => '處理中...', 
+                     :class => "btn btn-primary pull-right" %>
+<% end %>
+<br>
+<h1 style="text-align:center;"><%= @product.name %>存貨總覽</h1>
+<%= link_to("新增存貨",
+	          new_admin_product_inventory_path(@product),
+            :class => "btn btn-primary pull-right" ) %>
+<table class="table table-hover">
+	<thead> 
+	  <tr style="text-align:center;">
+	    <td> # </td>
+	    <td> 顏色 </td>
+	    <td> 尺寸 </td>
+	    <td> 數量 </td>
+	    <td> 銷售量 </td>
+	  </tr>
+	</thead>
+  <tbody>
+	  <% @inventories.each do | inventroy | %>
+			<tr style="text-align:center;">
+			  <td> # </td>
+			  <td><%= inventroy.color %></td>
+			  <td><%= inventroy.size %></td>
+			  <td><%= inventroy.amount %></td>
+			  <td><%= inventroy.popularity %></td>
+			  <td>
+			  	<%= link_to("編輯", 
+			  	            edit_admin_product_inventory_path(@product,inventroy), 
+			  	            :class => "btn btn-sm btn-default")%>
+			  	<%= link_to("刪除",
+			  		          admin_product_inventory_path(@product,inventroy),
+                      :class => "btn btn-sm btn-default", :method=>:delete,
+                      data:{confirm: "你確定移除存貨 #{inventroy.color}-#{inventroy.size}？"}) %>
+			  </td>
+			</tr>
+    <% end %>
+  </tbody>
+</table>
