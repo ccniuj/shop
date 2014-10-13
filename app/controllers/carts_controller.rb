@@ -1,6 +1,7 @@
 class CartsController < ApplicationController
   # before_action :authenticate_user!, except: [:index, :add]
-  
+  before_action :session_to_cart
+
   def index
     @is_checkout = false
     if current_user
@@ -94,7 +95,7 @@ class CartsController < ApplicationController
 
   def operation
     unless params.has_key? :items
-      flash[:alert] = "You have to select at least 1 product"
+      flash[:alert] = "您必須選擇至少一件商品"
       redirect_to carts_path
     else
       if params.has_key? :checkout
@@ -116,30 +117,32 @@ class CartsController < ApplicationController
   end
   
   def remove_cart
-    if params.has_key? :items
-      params[:items].each do |i|
-        @inventory = Inventory.find(i)
-        @cart = Cart.where(:user_id => current_user.id).take
-        @cart.remove!(@inventory)
-      end
-      flash[:alert] = "Product has been removed"
-    else
-      @inventory = Inventory.find(params[:id])
+    params[:items].each do |i|
+      @inventory = Inventory.find(i)
       @cart = Cart.where(:user_id => current_user.id).take
       @cart.remove!(@inventory)
-      flash[:alert] = "Products have been removed"
-      redirect_to carts_path
     end
+    flash[:alert] = "已將商品從購物車中移除"
   end
 
   def  remove_session
     params[:items].each do |i|
       session[:cart].delete(i)
     end
-    flash[:alert] = "Products have been removed"
+    flash[:alert] = "已將商品從購物車中移除"
   end
 
   private
+
+  def session_to_cart
+    if session[:cart] && current_user
+      cart = current_user.carts.take
+      session[:cart].each do |key, val|
+        CartInventory.create({cart_id: cart.id, inventory_id: key, amount: val})
+      end
+      session[:cartt] = nil
+    end
+  end
 
   def checkout
     @is_checkout = true
@@ -161,7 +164,7 @@ class CartsController < ApplicationController
         
     params[:items].each do |i|
       @t = Inventory.find(i)
-      @n = CartInventory.where(cart_id: current_user.id, inventory_id: i).take.amount
+      @n = CartInventory.where(cart_id: current_user.carts.take.id, inventory_id: i).take.amount
       @inventories << @t
       @item_amount << @n
       @total_price += @t.product.price * @n

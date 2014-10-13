@@ -16,4 +16,5 @@ module ApplicationHelper
 
     alerts.join("\n").html_safe
   end
+
 end
