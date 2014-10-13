@@ -1,5 +1,5 @@
 class CartsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :add_session]
+  before_action :authenticate_user!, except: [:index, :add]
   
   def index
     @is_checkout = false
@@ -24,15 +24,16 @@ class CartsController < ApplicationController
   end
 
   def index_session
-    # @cart = Cart.where(user_id: current_user.id).take
-    @item = CartInventory.where(cart_id: @cart.id)
+    @cart = 1
     @inventories = []
     @item_amount = []
-    @item.each do |z|
-      @i = Inventory.joins(:product).where(id: z.inventory_id).take
-      @n = z.amount
-      @inventories << @i
-      @item_amount << @n
+    if session[:cart] 
+      session[:cart].each do |key, val|
+        @i = Inventory.joins(:product).where(id: key).take
+        @n = val
+        @inventories << @i
+        @item_amount << @n
+      end
     end
   end
 
@@ -70,15 +71,20 @@ class CartsController < ApplicationController
           @item_amount_sum += val.to_i
         end
       end
+    end
   end
 
   def add_to_session
     params[:inventory].each do | key, val |
-      unless val.to_i == 0
-        if session[key.to_sym]
-          new_val = val.to_i + session[key.to_sym]
-        else
-          session[key.to_sym] = val.to_i
+      unless val.to_i == 0 
+        unless session[:cart]
+          session[:cart] = {key.to_sym => val.to_i}
+        else 
+          if session[:cart].has_key? key
+            session[:cart][key] += val.to_i
+          else
+            session[:cart].store(key, val.to_i)
+          end
         end
         @item_num_sum += 1
         @item_amount_sum += val.to_i
