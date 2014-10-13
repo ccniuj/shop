@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:create]
 
   def index
     @orders = Order.where(user_id: current_user.id)
@@ -64,8 +64,16 @@ class OrdersController < ApplicationController
   end
 
   def create_contact
-    @contact = current_user.contacts.new(contact_params)
-    @contact.save!
+    if current_user
+      @contact = current_user.contacts.new(contact_params)
+      @contact.save!
+    else
+      User.create!({:email => params[:order][:contact][:email], 
+        :password => params[:order][:contact][:email], 
+        :password_confirmation => params[:order][:contact][:password_conformation] })
+
+    end
+    
   end
   
   def update_contact

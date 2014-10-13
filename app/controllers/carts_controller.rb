@@ -99,9 +99,6 @@ class CartsController < ApplicationController
     else
       if params.has_key? :checkout
         checkout
-        @order = current_user.orders.new
-        @contacts = current_user.contacts.all
-        @contact = current_user.contacts.first
         render 'carts/checkout'
       elsif params.has_key? :remove
         remove
@@ -133,15 +130,14 @@ class CartsController < ApplicationController
       flash[:alert] = "Products have been removed"
       redirect_to carts_path
     end
-
   end
 
   def  remove_session
-      params[:items].each do |i|
-        session[:cart].delete(i)
-      end
-      flash[:alert] = "Products have been removed"
+    params[:items].each do |i|
+      session[:cart].delete(i)
     end
+    flash[:alert] = "Products have been removed"
+  end
 
   private
 
@@ -151,7 +147,18 @@ class CartsController < ApplicationController
     @inventories = []
     @item_amount = []
     @total_price = 0
-
+    if current_user 
+      checkout_cart
+    else
+      checkout_session
+    end
+  end
+  
+  def checkout_cart
+    @order = current_user.orders.new
+    @contacts = current_user.contacts.all
+    @contact = current_user.contacts.first
+        
     params[:items].each do |i|
       @t = Inventory.find(i)
       @n = CartInventory.where(cart_id: current_user.id, inventory_id: i).take.amount
@@ -163,5 +170,19 @@ class CartsController < ApplicationController
     # implement event algorothm here
 
   end
-  
+
+  def checkout_session
+    @order = Order.new
+    @contact = Contact.new    
+    params[:items].each do |i|
+      @t = Inventory.find(i)
+      @n = session[:cart][i]
+      @inventories << @t
+      @item_amount << @n
+      @total_price += @t.product.price * @n
+    end
+
+    # implement event algorothm here
+
+  end  
 end
