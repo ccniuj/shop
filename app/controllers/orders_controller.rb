@@ -40,8 +40,7 @@ class OrdersController < ApplicationController
       @inventory << @i
     end
 
-    @cart = Cart.where(user_id: current_user).take
-
+    @cart = Cart.where(user_id: current_user.id).take
     par = Hash.new
     count = 0
     @inventory.each do |i|
@@ -52,6 +51,8 @@ class OrdersController < ApplicationController
       @item.save!
       @cart.remove!(i)
       count += 1
+
+      session[:cart] = nil
     end
   end
 
