@@ -1,8 +1,16 @@
 class CartsController < ApplicationController
-  before_action :authenticate_user!, except: [:add_session]
+  before_action :authenticate_user!, except: [:index, :add_session]
   
   def index
     @is_checkout = false
+    if current_user
+      index_cart
+    else
+      index_session
+    end
+  end
+
+  def index_cart
     @cart = Cart.where(user_id: current_user.id).take
     @item = CartInventory.where(cart_id: @cart.id)
     @inventories = []
@@ -15,10 +23,39 @@ class CartsController < ApplicationController
     end
   end
 
+  def index_session
+    # @cart = Cart.where(user_id: current_user.id).take
+    @item = CartInventory.where(cart_id: @cart.id)
+    @inventories = []
+    @item_amount = []
+    @item.each do |z|
+      @i = Inventory.joins(:product).where(id: z.inventory_id).take
+      @n = z.amount
+      @inventories << @i
+      @item_amount << @n
+    end
+  end
+
   def add
-    @cart_id = Cart.where(user_id: current_user.id).first.id
     @item_num_sum = 0
     @item_amount_sum = 0
+    
+    if current_user
+      add_to_cart
+    else 
+      add_to_session
+    end
+
+    if @item_num_sum > 0
+      flash[:notice] = "已成功新增 #{@item_num_sum} 項商品，共 #{@item_amount_sum} 件"
+    else
+      flash[:alert] = "你並未新增任何商品至購物車"
+    end
+    redirect_to product_path(params[:product_id])
+  end
+  
+  def add_to_cart
+    @cart_id = Cart.where(user_id: current_user.id).first.id
     params[:inventory].each do | key, val |
       @cart_invt = CartInventory.where(cart_id: @cart_id, inventory_id: key).first
       unless val.to_i == 0
@@ -33,39 +70,20 @@ class CartsController < ApplicationController
           @item_amount_sum += val.to_i
         end
       end
-    end
-    if @item_num_sum > 0
-      flash[:notice] = "已成功新增 #{@item_num_sum} 項商品，共 #{@item_amount_sum} 件"
-    else
-      flash[:alert] = "你並未新增任何商品至購物車"
-    end
-    redirect_to product_path(params[:product_id])
   end
 
-  def add_session
-    # @cart_id = Cart.where(user_id: current_user.id).first.id
-    @item_num_sum = 0
-    @item_amount_sum = 0
+  def add_to_session
     params[:inventory].each do | key, val |
-      # @cart_invt = CartInventory.where(cart_id: @cart_id, inventory_id: key).first
       unless val.to_i == 0
         if session[key.to_sym]
           new_val = val.to_i + session[key.to_sym]
-          # CartInventory.update(@cart_invt.id,{cart_id: @cart_id, inventory_id: key, amount: new_val})
         else
           session[key.to_sym] = val.to_i
-          # CartInventory.create({cart_id: @cart_id, inventory_id: key, amount: val.to_i})
         end
         @item_num_sum += 1
         @item_amount_sum += val.to_i
       end
     end
-    if @item_num_sum > 0
-      flash[:notice] = "已成功新增 #{@item_num_sum} 項商品，共 #{@item_amount_sum} 件"
-    else
-      flash[:alert] = "你並未新增任何商品至購物車"
-    end
-    redirect_to product_path(params[:product_id])
   end
 
   def operation

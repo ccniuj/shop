@@ -57,14 +57,7 @@
 </div>
 <hr>
 <h3 style="text-align:center;">加入購物車</h3>
-<% if current_user %>
-  <%= form_tag add_cart_path(current_user.carts.first.id), :method => "put" do %>
-    <%= render "add" %>
-    <%= submit_tag "加入購物車", :class => "btn btn-sm btn-default" %>
-  <% end %>
-<% else %>
-  <%= form_tag add_session_cart_path, :method => "post" do %>
-    <%= render "add" %>
-    <%= submit_tag "加入購物車", :class => "btn btn-sm btn-default" %>
-  <% end %>
+<%= form_tag add_cart_path(current_user.carts.first.id), :method => "put" do %>
+  <%= render "add" %>
+  <%= submit_tag "加入購物車", :class => "btn btn-sm btn-default" %>
 <% end %>
