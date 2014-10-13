@@ -1,7 +1,51 @@
 <h1 style="text-align:center;"><%= @product.name %></h1>
 <%= link_to '返回存貨管理', admin_products_path, :class => "btn btn-warning" %>
+<%= link_to '新增目錄或分類',
+            admin_catalogs_path,
+            :class => "btn btn-primary pull-right" %>
 <hr>
 <%= form_for @product, url: admin_product_path(@product) do |product| %>
+  <h3 style="text-align:center;">分類</h3>
+  <p style="text-align:center;">*可同時給予產品多個類別</p>
+	<% @catalogs.each do |group| %>
+		<table class="table table-hover">
+			<thead>
+			  <tr style="text-align:center;">
+					<% group.each do |catalog| %>
+					  <% if catalog %>
+				  	  <td class="col-md-3"><%= catalog.name %></td>
+				  	<% else %>
+				  	  <td class="col-md-3"></td>
+				  	<% end %>
+					<% end %>
+			  </tr>
+			</thead>
+		  <tbody>
+				<tr style="text-align:center;">
+					<% group.each do |catalog| %>
+				  	<% if catalog %>
+						  <td>
+					  	  <% catalog.subclasses.each do | subclass | %>
+					  	    <% if SubclassProduct.where(subclass_id: subclass.id,product_id: @product.id).first %>
+						  	    <%= check_box_tag "subclass[]", subclass.id, true %>
+						  	    <%= subclass.name %><br>
+						  	  <% else %>
+						  	    <%= check_box_tag "subclass[]", subclass.id, false %>
+						  	    <%= subclass.name %><br>
+						  	  <% end %>
+					      <% end %>
+						  </td>
+				    <% else %>
+				      <td></td>
+				    <% end %>
+					<% end %>
+				</tr>
+		  </tbody>
+		</table>
+		<br>
+	<% end %>
+  <hr>
+  <h3 style="text-align:center;">產品資訊</h3>
   <div class="form-controller">
 	  <%= product.label "產品名稱" %><br>
 	  <%= product.text_field :name, class: "form-control" %>
@@ -39,28 +83,29 @@
 	    <td> # </td>
 	    <td> 顏色 </td>
 	    <td> 尺寸 </td>
-	    <td> 數量 </td>
+	    <td> 庫存量 </td>
 	    <td> 銷售量 </td>
 	  </tr>
 	</thead>
   <tbody>
-	  <% @inventories.each do | inventroy | %>
-			<tr style="text-align:center;">
-			  <td> # </td>
-			  <td><%= inventroy.color %></td>
-			  <td><%= inventroy.size %></td>
-			  <td><%= inventroy.amount %></td>
-			  <td><%= inventroy.popularity %></td>
-			  <td>
-			  	<%= link_to("編輯", 
-			  	            edit_admin_product_inventory_path(@product,inventroy), 
-			  	            :class => "btn btn-sm btn-default")%>
-			  	<%= link_to("刪除",
-			  		          admin_product_inventory_path(@product,inventroy),
-                      :class => "btn btn-sm btn-default", :method=>:delete,
-                      data:{confirm: "你確定移除存貨 #{inventroy.color}-#{inventroy.size}？"}) %>
-			  </td>
-			</tr>
-    <% end %>
+  	  <% @inventories.each do | inventory | %>
+				<tr style="text-align:center;">
+				  <td><%= inventory.id %></td>
+				  <td><%= inventory.color %></td>
+				  <td><%= inventory.size %></td>
+				  <td><%= inventory.amount %></td>
+				  <td><%= inventory.popularity %></td>
+				  <td>
+				  	<%= link_to("編輯", 
+				  	            edit_admin_product_inventory_path(@product,inventory), 
+				  	            :class => "btn btn-sm btn-default")%>
+				  	<%= link_to("刪除", 
+                        admin_product_inventory_path(@product,inventory),
+                        :class => "btn btn-sm btn-default", 
+                        :method=>:delete,
+                        data:{confirm:"你確定要刪除「#{inventory.color}-#{inventory.size}」庫存？"})%>
+				  </td>
+				</tr>
+      <% end %>
   </tbody>
 </table>

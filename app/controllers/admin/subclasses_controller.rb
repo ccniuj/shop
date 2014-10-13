@@ -46,10 +46,8 @@ class Admin::SubclassesController < ApplicationController
 
   def klassify
     old_classified_product = []
-    if SubclassProduct.where(subclass_id: params[:subclass_id].to_i)
-      SubclassProduct.where(subclass_id: params[:subclass_id].to_i).each do |item|
-        old_classified_product << item.product_id
-      end
+    SubclassProduct.where(subclass_id: params[:subclass_id].to_i).each do |item|
+      old_classified_product << item.product_id
     end
     params[:products] ? new_classified_product = params[:products].each(&:to_i) : new_classified_product = []
     shall_add = new_classified_product - old_classified_product
@@ -60,7 +58,7 @@ class Admin::SubclassesController < ApplicationController
     end
 
     shall_rm.each do |new_rm_id|
-      SubclassProduct.find_by_product_id(new_rm_id).destroy
+      SubclassProduct.where(subclass_id: params[:subclass_id].to_i, product_id: new_rm_id).first.destroy
     end
 
     redirect_to admin_catalog_subclass_product_path(params[:catalog_id].to_i,params[:subclass_id].to_i)

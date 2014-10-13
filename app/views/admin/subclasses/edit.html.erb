@@ -45,18 +45,12 @@
 			  	<%= link_to("編輯", 
 			  	            edit_admin_product_path(product), 
 			  	            :class => "btn btn-sm btn-default")%>
-			  	<%= link_to("刪除", # need to insert remove product from SubclassProduct url (path)
+			  	<%#= link_to("刪除", #need to insert remove product from SubclassProduct url (path)
 			  		          edit_admin_catalog_subclass_path(@catalog,@subclass),
                       :class => "btn btn-sm btn-default", :method=>:delete,
                       data:{confirm: "你確定要把 #{product.name} 從 #{@subclass.name} 中移除？"}) %>
 			  </td>
 			</tr>
     <% end %>
-  </tbody>
-</table>
-ss.name} 中移除？"}) %>
-				  </td>
-				</tr>
-      <% end %>
   </tbody>
 </table>
