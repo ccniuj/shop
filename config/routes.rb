@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       post :operation
       post :remove
       put :add
+      post :add_session
     end
   end
   resources :products
