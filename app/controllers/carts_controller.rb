@@ -140,7 +140,7 @@ class CartsController < ApplicationController
       session[:cart].each do |key, val|
         CartInventory.create({cart_id: cart.id, inventory_id: key, amount: val})
       end
-      session[:cartt] = nil
+      session[:cart] = nil
     end
   end
 
