@@ -1,5 +1,5 @@
 class CartsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :add]
+  # before_action :authenticate_user!, except: [:index, :add]
   
   def index
     @is_checkout = false
@@ -111,6 +111,14 @@ class CartsController < ApplicationController
   end
 
   def remove
+    if current_user
+      remove_cart
+    else
+      remove_session
+    end
+  end
+  
+  def remove_cart
     if params.has_key? :items
       params[:items].each do |i|
         @inventory = Inventory.find(i)
@@ -125,8 +133,16 @@ class CartsController < ApplicationController
       flash[:alert] = "Products have been removed"
       redirect_to carts_path
     end
+
   end
-  
+
+  def  remove_session
+      params[:items].each do |i|
+        session[:cart].delete(i)
+      end
+      flash[:alert] = "Products have been removed"
+    end
+
   private
 
   def checkout
