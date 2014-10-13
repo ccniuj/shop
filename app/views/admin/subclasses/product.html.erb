@@ -1,0 +1,40 @@
+<h1 style="text-align:center;">變更「<%= @subclass.name %>」分類產品</h1>
+<%= link_to '返回', 
+            edit_admin_catalog_subclass_path(@catalog,@subclass), 
+            :class => "btn btn-warning" %>
+<%= form_tag admin_catalog_subclass_klassify_path(@catalog,@subclass) do %>
+  <%= submit_tag '變更產品', class: "btn btn-primary pull-right" %>
+	<table class="table table-hover">
+			<thead>
+			  <tr style="text-align:center;">
+			    <td> # </td>
+			    <td> 名稱 </td>
+			    <td> 價錢 </td>
+			    <td> 存貨類別數 </td>
+			    <td> 存貨總量 </td>
+			    <td> 銷售總量 </td>
+			  </tr>
+			</thead>
+		  <tbody>
+			  <% @products.each do | product | %>
+					<tr style="text-align:center;">
+					  <td><%= product.id %></td>
+					  <td><%= link_to product.name, 
+					                  edit_admin_product_path(product),
+					                  target: "_blank" %></td>
+					  <td><%= product.price %></td>
+					  <td><%= product.inventories.count %></td>
+					  <td><%= product.total_amout %></td>
+					  <td><%= product.total_popularity %></td>
+					  <td>
+					  	<% if SubclassProduct.where(subclass_id:@subclass.id,product_id:product.id).first %>
+					  	  <%= check_box_tag "products[]", product.id, true %>
+					  	<% else %>
+					  	  <%= check_box_tag "products[]", product.id %>
+					  	<% end %>
+					  </td>
+					</tr>
+		    <% end %>
+		  </tbody>
+		</table>
+<% end %>

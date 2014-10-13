@@ -15,7 +15,10 @@ Rails.application.routes.draw do
       resources :answers
     end
     resources :catalogs do
-      resources :subclasses
+      resources :subclasses do
+        get :product
+        post :klassify
+      end
     end
     resources :products do
       resources :inventories do
