@@ -17,8 +17,8 @@
 <% end %>
 <br>
 <h1 style="text-align:center;"><%= @subclass.name %>的產品</h1>
-<%= link_to("新增產品", # need to insert add product to SubclassProduct url (path)
-	          edit_admin_catalog_subclass_path(@catalog,@subclass),
+<%= link_to("變更分類產品",
+	          admin_catalog_subclass_product_path(@catalog,@subclass),
             :class => "btn btn-primary pull-right" ) %>
 <table class="table table-hover">
 	<thead> 
@@ -32,23 +32,29 @@
 	  </tr>
 	</thead>
   <tbody>
-  	  <% @products.each do | product | %>
-				<tr style="text-align:center;">
-				  <td><%= product.id %></td>
-				  <td><%= link_to product.name, 
-				                  edit_admin_product_path(product) %></td>
-				  <td><%= product.price %></td>
-				  <td><%= product.inventories.count %></td>
-				  <td><%= product.total_amout %></td>
-				  <td><%= product.total_popularity %></td>
-				  <td>
-				  	<%= link_to("編輯", 
-				  	            edit_admin_product_path(product), 
-				  	            :class => "btn btn-sm btn-default")%>
-				  	<%= link_to("刪除", # need to insert remove product from SubclassProduct url (path)
-				  		          edit_admin_catalog_subclass_path(@catalog,@subclass),
-                        :class => "btn btn-sm btn-default", :method=>:delete,
-                        data:{confirm: "你確定要把 #{product.name} 從 #{@subclass.name} 中移除？"}) %>
+	  <% @products.each do | product | %>
+			<tr style="text-align:center;">
+			  <td><%= product.id %></td>
+			  <td><%= link_to product.name, 
+			                  edit_admin_product_path(product) %></td>
+			  <td><%= product.price %></td>
+			  <td><%= product.inventories.count %></td>
+			  <td><%= product.total_amout %></td>
+			  <td><%= product.total_popularity %></td>
+			  <td>
+			  	<%= link_to("編輯", 
+			  	            edit_admin_product_path(product), 
+			  	            :class => "btn btn-sm btn-default")%>
+			  	<%= link_to("刪除", # need to insert remove product from SubclassProduct url (path)
+			  		          edit_admin_catalog_subclass_path(@catalog,@subclass),
+                      :class => "btn btn-sm btn-default", :method=>:delete,
+                      data:{confirm: "你確定要把 #{product.name} 從 #{@subclass.name} 中移除？"}) %>
+			  </td>
+			</tr>
+    <% end %>
+  </tbody>
+</table>
+ss.name} 中移除？"}) %>
 				  </td>
 				</tr>
       <% end %>
