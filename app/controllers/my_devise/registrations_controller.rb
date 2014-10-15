@@ -14,7 +14,7 @@ class MyDevise::RegistrationsController < Devise::RegistrationsController
       	address: params[:user][:contact][:address],
       	cellphone: params[:user][:contact][:cellphone])
       @contact.save
-      binding.pry
+      # binding.pry
     end
   end
 end

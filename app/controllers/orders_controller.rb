@@ -29,7 +29,7 @@ class OrdersController < ApplicationController
     @order.save!
     add_order_inventory
     redirect_to orders_path, :notice => "成功新增訂單"
-    UserMailer.welcome(@user).deliver
+    UserMailer.welcome(current_user).deliver
   end
 
   private 
