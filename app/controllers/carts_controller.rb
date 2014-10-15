@@ -37,7 +37,7 @@ class CartsController < ApplicationController
         @item_amount << @n
       end
     end
-    binding.pry
+    # binding.pry
   end
 
   def add
