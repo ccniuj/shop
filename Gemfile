@@ -43,3 +43,4 @@ gem 'spring',        group: :development
   gem 'bootstrap-sass'
   gem 'simple_form'
   gem 'hirb'
+  gem 'pry-rails', group: :development

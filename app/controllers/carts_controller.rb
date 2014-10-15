@@ -9,6 +9,7 @@ class CartsController < ApplicationController
     else
       index_session
     end
+    # binding.pry
   end
 
   def index_cart
@@ -36,6 +37,7 @@ class CartsController < ApplicationController
         @item_amount << @n
       end
     end
+    binding.pry
   end
 
   def add
