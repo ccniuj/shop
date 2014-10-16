@@ -32,6 +32,7 @@ class Admin::ProductsController < ApplicationController
     else
       #using render here will cause issue, need to fix later
       flash[:alert] = "產品新增失敗，必須勾選所屬分類"
+      # render :new
       redirect_to new_admin_product_path
   	end
   end

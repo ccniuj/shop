@@ -35,7 +35,14 @@ GEM
     bootstrap-sass (3.2.0.1)
       sass (~> 3.2)
     builder (3.2.2)
+<<<<<<< HEAD
     coderay (1.1.0)
+=======
+    climate_control (0.0.3)
+      activesupport (>= 3.0)
+    cocaine (0.5.4)
+      climate_control (>= 0.0.3, < 1.0)
+>>>>>>> feature/image_upload_for_inventory_iamge
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
@@ -69,6 +76,11 @@ GEM
     minitest (5.4.1)
     multi_json (1.10.1)
     orm_adapter (0.5.0)
+    paperclip (4.2.0)
+      activemodel (>= 3.0.0)
+      activesupport (>= 3.0.0)
+      cocaine (~> 0.5.3)
+      mime-types
     polyglot (0.3.5)
     pry (0.10.1)
       coderay (~> 1.1.0)
@@ -149,7 +161,11 @@ DEPENDENCIES
   hirb
   jbuilder (~> 2.0)
   jquery-rails
+<<<<<<< HEAD
   pry-rails
+=======
+  paperclip (~> 4.2)
+>>>>>>> feature/image_upload_for_inventory_iamge
   rails (= 4.1.4)
   rolify
   sass-rails (~> 4.0.3)

@@ -51,6 +51,7 @@
 	<% @inventories.each do | inventory | %>
 	  <% inventory.inventory_images.each do | images | %>
 	    <h5>照片標題：<%= images.title %></h5>
+	    <div><%= image_tag images.avatar.url %></div>
 	    <p>照片說明：<%= images.description %></p>
 	  <% end %>
 	<% end %>
