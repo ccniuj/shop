@@ -35,11 +35,11 @@ GEM
     bootstrap-sass (3.2.0.1)
       sass (~> 3.2)
     builder (3.2.2)
-    coderay (1.1.0)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.4)
       climate_control (>= 0.0.3, < 1.0)
+    coderay (1.1.0)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
@@ -158,8 +158,8 @@ DEPENDENCIES
   hirb
   jbuilder (~> 2.0)
   jquery-rails
-  pry-rails
   paperclip (~> 4.2)
+  pry-rails
   rails (= 4.1.4)
   rolify
   sass-rails (~> 4.0.3)
