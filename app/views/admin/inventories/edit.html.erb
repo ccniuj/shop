@@ -31,6 +31,7 @@
 	  <tr style="text-align:center;">
 	    <td> # </td>
 	    <td> 名稱 </td>
+	    <td> 圖片 </td>
 	    <td> 說明 </td>
 	  </tr>
 	</thead>
@@ -40,6 +41,7 @@
 				  <td><%= image.id %></td>
 				  <td><%= link_to image.title, 
 				                  edit_admin_product_inventory_inventory_image_path(@product,@inventory,image) %></td>
+				  <td><%= image_tag image.avatar.url %></td>
 				  <td><%= image.description %></td>
 				  <td>
 				  	<%= link_to("編輯", 

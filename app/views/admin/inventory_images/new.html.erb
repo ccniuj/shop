@@ -9,6 +9,11 @@
 	  <%= image.text_field :title, class: "form-control" %>
 	</div>
 	<div class="form-controller">
+		<%= image.label "存貨照片" %><br>
+		<%= image.file_field :avatar %>
+	</div>
+	<br>
+	<div class="form-controller">
 	  <%= image.label "存貨照片說明" %><br>
 	  <%= image.text_area :description, class: "form-control" %>
 	</div>

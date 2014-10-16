@@ -37,7 +37,7 @@ class Admin::InventoryImagesController < ApplicationController
   private
 
   def inventory_image_params
-  	params.require(:inventory_image).permit(:title, :description)
+  	params.require(:inventory_image).permit(:title, :avatar, :description)
   end
 
   def find_product_and_inventory

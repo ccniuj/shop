@@ -1,8 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'devise'
-gem 'rolify'
-gem 'authority'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.4'
 # Use sqlite3 as the database for Active Record
@@ -40,6 +37,10 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-  gem 'bootstrap-sass'
-  gem 'simple_form'
-  gem 'hirb'
+gem 'devise'
+gem 'rolify'
+gem 'authority'
+gem 'bootstrap-sass'
+gem 'simple_form'
+gem 'hirb'
+gem "paperclip", "~> 4.2"
